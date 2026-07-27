@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TalentRouteImport } from './routes/talent'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PostJobRouteImport } from './routes/post-job'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MessagesRouteImport } from './routes/messages'
@@ -33,6 +34,11 @@ const StatsRoute = StatsRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostJobRoute = PostJobRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/post-job': typeof PostJobRoute
+  '/profile': typeof ProfileRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/post-job': typeof PostJobRoute
+  '/profile': typeof ProfileRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/post-job': typeof PostJobRoute
+  '/profile': typeof ProfileRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/notifications'
     | '/post-job'
+    | '/profile'
     | '/sitemap.xml'
     | '/stats'
     | '/talent'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/notifications'
     | '/post-job'
+    | '/profile'
     | '/sitemap.xml'
     | '/stats'
     | '/talent'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/notifications'
     | '/post-job'
+    | '/profile'
     | '/sitemap.xml'
     | '/stats'
     | '/talent'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   MessagesRoute: typeof MessagesRoute
   NotificationsRoute: typeof NotificationsRoute
   PostJobRoute: typeof PostJobRoute
+  ProfileRoute: typeof ProfileRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StatsRoute: typeof StatsRoute
   TalentRoute: typeof TalentRoute
@@ -181,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/post-job': {
@@ -241,6 +261,7 @@ const rootRouteChildren: RootRouteChildren = {
   MessagesRoute: MessagesRoute,
   NotificationsRoute: NotificationsRoute,
   PostJobRoute: PostJobRoute,
+  ProfileRoute: ProfileRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StatsRoute: StatsRoute,
   TalentRoute: TalentRoute,
