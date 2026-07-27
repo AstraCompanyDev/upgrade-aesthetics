@@ -72,6 +72,7 @@ export const statusStyles: Record<string, string> = {
 };
 
 export type Applicant = {
+  id: string;
   name: string;
   initials: string;
   role: string;
@@ -81,6 +82,7 @@ export type Applicant = {
   status: "New" | "Shortlisted" | "Interviewing" | "Declined";
   pitch: string;
 };
+
 
 export const applicantsByJob: Record<string, Applicant[]> = {
   "cfl-management-team": [
