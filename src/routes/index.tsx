@@ -174,6 +174,7 @@ function Dashboard() {
                       <Send className="size-3.5" />
                       Message
                     </Link>
+                  </div>
                 ))}
               </div>
             </section>
