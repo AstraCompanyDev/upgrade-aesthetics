@@ -118,10 +118,13 @@ function Dashboard() {
             <p className="mt-2 max-w-sm text-sm text-primary-foreground/85">
               Three proposals are waiting on your review and two job posts have fresh applicants.
             </p>
-            <button className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary-foreground px-5 py-2.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5">
+            <Link
+              to="/post-job"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary-foreground px-5 py-2.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
+            >
               <Plus className="size-4" />
               Post a new job
-            </button>
+            </Link>
           </div>
           <img
             src={heroDocs}
