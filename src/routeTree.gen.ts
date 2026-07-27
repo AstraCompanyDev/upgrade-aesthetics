@@ -20,6 +20,7 @@ import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
 import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
+import { Route as FreelancerSettingsRouteImport } from './routes/freelancer.settings'
 import { Route as FreelancerProposalsRouteImport } from './routes/freelancer.proposals'
 import { Route as FreelancerFindWorkIndexRouteImport } from './routes/freelancer.find-work.index'
 import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.shortlist'
@@ -84,6 +85,11 @@ const SettingsProfileRoute = SettingsProfileRouteImport.update({
   path: '/settings/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FreelancerSettingsRoute = FreelancerSettingsRouteImport.update({
+  id: '/freelancer/settings',
+  path: '/freelancer/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FreelancerProposalsRoute = FreelancerProposalsRouteImport.update({
   id: '/freelancer/proposals',
   path: '/freelancer/proposals',
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
+  '/freelancer/settings': typeof FreelancerSettingsRoute
   '/settings/profile': typeof SettingsProfileRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -160,6 +167,7 @@ export interface FileRoutesByTo {
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
+  '/freelancer/settings': typeof FreelancerSettingsRoute
   '/settings/profile': typeof SettingsProfileRoute
   '/freelancer': typeof FreelancerIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
+  '/freelancer/settings': typeof FreelancerSettingsRoute
   '/settings/profile': typeof SettingsProfileRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/talent'
     | '/freelancer/proposals'
+    | '/freelancer/settings'
     | '/settings/profile'
     | '/freelancer/'
     | '/job/$jobId/applicants'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/talent'
     | '/freelancer/proposals'
+    | '/freelancer/settings'
     | '/settings/profile'
     | '/freelancer'
     | '/job/$jobId/applicants'
@@ -247,6 +258,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/talent'
     | '/freelancer/proposals'
+    | '/freelancer/settings'
     | '/settings/profile'
     | '/freelancer/'
     | '/job/$jobId/applicants'
@@ -269,6 +281,7 @@ export interface RootRouteChildren {
   StatsRoute: typeof StatsRoute
   TalentRoute: typeof TalentRoute
   FreelancerProposalsRoute: typeof FreelancerProposalsRoute
+  FreelancerSettingsRoute: typeof FreelancerSettingsRoute
   SettingsProfileRoute: typeof SettingsProfileRoute
   FreelancerIndexRoute: typeof FreelancerIndexRoute
   JobJobIdApplicantsRoute: typeof JobJobIdApplicantsRouteWithChildren
@@ -358,6 +371,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/freelancer/settings': {
+      id: '/freelancer/settings'
+      path: '/freelancer/settings'
+      fullPath: '/freelancer/settings'
+      preLoaderRoute: typeof FreelancerSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/freelancer/proposals': {
       id: '/freelancer/proposals'
       path: '/freelancer/proposals'
@@ -440,6 +460,7 @@ const rootRouteChildren: RootRouteChildren = {
   StatsRoute: StatsRoute,
   TalentRoute: TalentRoute,
   FreelancerProposalsRoute: FreelancerProposalsRoute,
+  FreelancerSettingsRoute: FreelancerSettingsRoute,
   SettingsProfileRoute: SettingsProfileRoute,
   FreelancerIndexRoute: FreelancerIndexRoute,
   JobJobIdApplicantsRoute: JobJobIdApplicantsRouteWithChildren,
