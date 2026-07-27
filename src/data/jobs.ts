@@ -87,6 +87,7 @@ export type Applicant = {
 export const applicantsByJob: Record<string, Applicant[]> = {
   "cfl-management-team": [
     {
+      id: "amelia-r",
       name: "Amelia R.",
       initials: "AR",
       role: "Operations Lead",
@@ -97,6 +98,7 @@ export const applicantsByJob: Record<string, Applicant[]> = {
       pitch: "Ten years running delivery pods for agencies; I live in spreadsheets and standups.",
     },
     {
+      id: "daniel-o",
       name: "Daniel O.",
       initials: "DO",
       role: "Project Manager",
@@ -107,6 +109,7 @@ export const applicantsByJob: Record<string, Applicant[]> = {
       pitch: "PMP certified, comfortable owning weekly client reporting end to end.",
     },
     {
+      id: "priya-n",
       name: "Priya N.",
       initials: "PN",
       role: "Delivery Manager",
@@ -117,6 +120,7 @@ export const applicantsByJob: Record<string, Applicant[]> = {
       pitch: "Scaled a 12-person ops team; strong on process design and hiring.",
     },
     {
+      id: "marcus-t",
       name: "Marcus T.",
       initials: "MT",
       role: "Ops Generalist",
@@ -131,7 +135,8 @@ export const applicantsByJob: Record<string, Applicant[]> = {
 
 export const defaultApplicants: Applicant[] = [
   {
-    name: "Sofia L.",
+    id: "sofia-l",
+      name: "Sofia L.",
     initials: "SL",
     role: "Product Designer",
     rate: "$40 / hr",
@@ -141,7 +146,8 @@ export const defaultApplicants: Applicant[] = [
     pitch: "Portfolio of SaaS dashboards; I can start this week and share progress daily.",
   },
   {
-    name: "Kwame B.",
+    id: "kwame-b",
+      name: "Kwame B.",
     initials: "KB",
     role: "Full-stack Developer",
     rate: "$55 / hr",
@@ -151,7 +157,8 @@ export const defaultApplicants: Applicant[] = [
     pitch: "Shipped 20+ client projects on Node and Postgres with clean handover docs.",
   },
   {
-    name: "Yuki M.",
+    id: "yuki-m",
+      name: "Yuki M.",
     initials: "YM",
     role: "Brand Designer",
     rate: "$1,000 fixed",
@@ -161,3 +168,11 @@ export const defaultApplicants: Applicant[] = [
     pitch: "Identity systems for small teams — logo, type scale and a practical style guide.",
   },
 ];
+
+export function getApplicants(jobId: string) {
+  return applicantsByJob[jobId] ?? defaultApplicants;
+}
+
+export function getApplicant(jobId: string, applicantId: string) {
+  return getApplicants(jobId).find((a) => a.id === applicantId);
+}
