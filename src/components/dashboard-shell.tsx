@@ -23,11 +23,8 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-sidebar px-5 py-6 text-sidebar-foreground lg:flex">
-        <Link to="/" className="flex items-center gap-2 px-2">
-          <span className="flex size-8 items-center justify-center rounded-lg gradient-brand font-display text-sm font-bold text-primary-foreground">
-            Z
-          </span>
-          <span className="font-display text-lg font-bold tracking-tight">ZeeWork</span>
+        <Link to="/" className="flex items-center px-2" aria-label="ZeeWork home">
+          <img src="/zeework-logo-light.svg" alt="ZeeWork" className="h-7 w-auto" />
         </Link>
 
         <nav className="mt-9 flex flex-col gap-1">
