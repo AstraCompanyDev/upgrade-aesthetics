@@ -270,13 +270,18 @@ function Dashboard() {
                       >
                         {p.applicants ? `${p.applicants} new applicants` : "No new applicants"}
                       </span>
-                      <button className="rounded-lg border border-border px-3 py-2 text-xs font-medium transition-colors hover:bg-accent">
+                      <Link
+                        to="/jobs"
+                        className="rounded-lg border border-border px-3 py-2 text-xs font-medium transition-colors hover:bg-accent"
+                      >
                         Job post
-                      </button>
-                      <button className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+                      </Link>
+                      <Link
+                        to="/talent"
+                        className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                      >
                         Find applicants
-                      </button>
-                    </div>
+                      </Link>
                   </li>
                 ))}
               </ul>
