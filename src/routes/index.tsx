@@ -167,11 +167,13 @@ function Dashboard() {
                       {m.verified && <BadgeCheck className="size-4 text-primary" />}
                     </p>
                     <p className="text-xs text-muted-foreground">{m.role}</p>
-                    <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2 text-sm font-medium transition-colors hover:bg-accent">
+                    <Link
+                      to="/messages"
+                      className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2 text-sm font-medium transition-colors hover:bg-accent"
+                    >
                       <Send className="size-3.5" />
                       Message
-                    </button>
-                  </div>
+                    </Link>
                 ))}
               </div>
             </section>
