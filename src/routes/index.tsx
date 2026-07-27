@@ -282,6 +282,7 @@ function Dashboard() {
                       >
                         Find applicants
                       </Link>
+                    </div>
                   </li>
                 ))}
               </ul>
