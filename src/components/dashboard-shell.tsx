@@ -1,0 +1,104 @@
+import { Link } from "@tanstack/react-router";
+import {
+  Bell,
+  Briefcase,
+  ChartNoAxesColumn,
+  LayoutGrid,
+  MessageSquare,
+  Search,
+  Settings,
+  Users,
+} from "lucide-react";
+import type { ReactNode } from "react";
+
+const nav = [
+  { label: "Dashboard", icon: LayoutGrid, active: true },
+  { label: "My Stats", icon: ChartNoAxesColumn },
+  { label: "Jobs", icon: Briefcase },
+  { label: "Talent", icon: Users },
+  { label: "Messages", icon: MessageSquare, badge: 1 },
+];
+
+export function DashboardShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex min-h-screen">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-sidebar px-5 py-6 text-sidebar-foreground lg:flex">
+        <Link to="/" className="flex items-center gap-2 px-2">
+          <span className="flex size-8 items-center justify-center rounded-lg gradient-brand font-display text-sm font-bold text-primary-foreground">
+            Z
+          </span>
+          <span className="font-display text-lg font-bold tracking-tight">ZeeWork</span>
+        </Link>
+
+        <nav className="mt-9 flex flex-col gap-1">
+          {nav.map(({ label, icon: Icon, active, badge }) => (
+            <button
+              key={label}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                active
+                  ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
+                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
+              }`}
+            >
+              <Icon className="size-4" />
+              {label}
+              {badge ? (
+                <span className="ml-auto flex size-5 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground">
+                  {badge}
+                </span>
+              ) : null}
+            </button>
+          ))}
+        </nav>
+
+        <div className="mt-auto rounded-xl bg-sidebar-accent/60 p-4">
+          <p className="font-display text-sm font-semibold">Hiring faster?</p>
+          <p className="mt-1 text-xs text-sidebar-foreground/70">
+            Invite vetted talent straight to your shortlist.
+          </p>
+          <button className="mt-3 w-full rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+            Invite talent
+          </button>
+        </div>
+      </aside>
+
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="sticky top-0 z-20 flex items-center gap-4 border-b border-border bg-background/80 px-5 py-4 backdrop-blur-md lg:px-10">
+          <span className="font-display text-base font-bold lg:hidden">ZeeWork</span>
+          <div className="relative hidden max-w-md flex-1 md:block">
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="search"
+              placeholder="Search talent, jobs, offers"
+              aria-label="Search"
+              className="h-10 w-full rounded-full border border-border bg-surface pl-9 pr-4 text-sm outline-none transition-shadow placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40"
+            />
+          </div>
+          <div className="ml-auto flex items-center gap-3">
+            <button
+              aria-label="Notifications"
+              className="relative flex size-10 items-center justify-center rounded-full border border-border bg-surface text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <Bell className="size-4" />
+              <span className="absolute right-2.5 top-2.5 size-2 rounded-full bg-destructive" />
+            </button>
+            <button
+              aria-label="Settings"
+              className="hidden size-10 items-center justify-center rounded-full border border-border bg-surface text-muted-foreground transition-colors hover:text-foreground sm:flex"
+            >
+              <Settings className="size-4" />
+            </button>
+            <div className="flex items-center gap-2 rounded-full border border-border bg-surface py-1 pl-1 pr-3">
+              <span className="flex size-8 items-center justify-center rounded-full gradient-brand text-xs font-semibold text-primary-foreground">
+                SW
+              </span>
+              <span className="hidden text-sm font-medium sm:block">Sean W.</span>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 px-5 pb-16 pt-6 lg:px-10">{children}</main>
+      </div>
+    </div>
+  );
+}
