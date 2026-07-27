@@ -71,25 +71,30 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             />
           </div>
           <div className="ml-auto flex items-center gap-3">
-            <button
+            <Link
+              to="/notifications"
               aria-label="Notifications"
               className="relative flex size-10 items-center justify-center rounded-full border border-border bg-surface text-muted-foreground transition-colors hover:text-foreground"
             >
               <Bell className="size-4" />
               <span className="absolute right-2.5 top-2.5 size-2 rounded-full bg-destructive" />
-            </button>
-            <button
+            </Link>
+            <Link
+              to="/settings/profile"
               aria-label="Settings"
               className="hidden size-10 items-center justify-center rounded-full border border-border bg-surface text-muted-foreground transition-colors hover:text-foreground sm:flex"
             >
               <Settings className="size-4" />
-            </button>
-            <div className="flex items-center gap-2 rounded-full border border-border bg-surface py-1 pl-1 pr-3">
+            </Link>
+            <Link
+              to="/profile"
+              className="flex items-center gap-2 rounded-full border border-border bg-surface py-1 pl-1 pr-3 transition-colors hover:bg-accent"
+            >
               <span className="flex size-8 items-center justify-center rounded-full gradient-brand text-xs font-semibold text-primary-foreground">
                 SW
               </span>
               <span className="hidden text-sm font-medium sm:block">Sean W.</span>
-            </div>
+            </Link>
           </div>
         </header>
 

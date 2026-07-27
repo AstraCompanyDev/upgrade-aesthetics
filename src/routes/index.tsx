@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   ArrowUpRight,
@@ -118,10 +118,13 @@ function Dashboard() {
             <p className="mt-2 max-w-sm text-sm text-primary-foreground/85">
               Three proposals are waiting on your review and two job posts have fresh applicants.
             </p>
-            <button className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary-foreground px-5 py-2.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5">
+            <Link
+              to="/post-job"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary-foreground px-5 py-2.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
+            >
               <Plus className="size-4" />
               Post a new job
-            </button>
+            </Link>
           </div>
           <img
             src={heroDocs}
@@ -164,10 +167,13 @@ function Dashboard() {
                       {m.verified && <BadgeCheck className="size-4 text-primary" />}
                     </p>
                     <p className="text-xs text-muted-foreground">{m.role}</p>
-                    <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2 text-sm font-medium transition-colors hover:bg-accent">
+                    <Link
+                      to="/messages"
+                      className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2 text-sm font-medium transition-colors hover:bg-accent"
+                    >
                       <Send className="size-3.5" />
                       Message
-                    </button>
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -267,12 +273,18 @@ function Dashboard() {
                       >
                         {p.applicants ? `${p.applicants} new applicants` : "No new applicants"}
                       </span>
-                      <button className="rounded-lg border border-border px-3 py-2 text-xs font-medium transition-colors hover:bg-accent">
+                      <Link
+                        to="/jobs"
+                        className="rounded-lg border border-border px-3 py-2 text-xs font-medium transition-colors hover:bg-accent"
+                      >
                         Job post
-                      </button>
-                      <button className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+                      </Link>
+                      <Link
+                        to="/talent"
+                        className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                      >
                         Find applicants
-                      </button>
+                      </Link>
                     </div>
                   </li>
                 ))}

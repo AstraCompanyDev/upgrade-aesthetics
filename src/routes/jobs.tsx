@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Plus, Search, Users } from "lucide-react";
 import { DashboardShell } from "@/components/dashboard-shell";
+import { jobs, statusStyles } from "@/data/jobs";
 
 export const Route = createFileRoute("/jobs")({
   head: () => ({
@@ -26,51 +27,6 @@ export const Route = createFileRoute("/jobs")({
 
 const filters = ["All", "Open", "Draft", "Closed"] as const;
 
-const jobs = [
-  {
-    title: "CFL Management Team Position",
-    status: "Open",
-    type: "Hourly",
-    rate: "$35–50 / hr",
-    applicants: 4,
-    posted: "8 months ago",
-    skills: ["Operations", "Leadership", "Reporting"],
-  },
-  {
-    title: "Figma Designer For Website",
-    status: "Open",
-    type: "Fixed",
-    rate: "$350",
-    applicants: 6,
-    posted: "1 year ago",
-    skills: ["Figma", "UI Design", "Prototyping"],
-  },
-  {
-    title: "Business Site Backend Development",
-    status: "Draft",
-    type: "Hourly",
-    rate: "$40–60 / hr",
-    applicants: 0,
-    posted: "over 1 year ago",
-    skills: ["Node.js", "Postgres", "API"],
-  },
-  {
-    title: "Brand Refresh & Style Guide",
-    status: "Closed",
-    type: "Fixed",
-    rate: "$1,200",
-    applicants: 11,
-    posted: "2 years ago",
-    skills: ["Branding", "Illustration"],
-  },
-];
-
-const statusStyles: Record<string, string> = {
-  Open: "bg-primary-soft text-accent-foreground",
-  Draft: "bg-muted text-muted-foreground",
-  Closed: "bg-muted text-muted-foreground",
-};
-
 function JobsPage() {
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
   const [query, setQuery] = useState("");
@@ -92,10 +48,13 @@ function JobsPage() {
               {jobs.reduce((n, j) => n + j.applicants, 0)} total applicants
             </p>
           </div>
-          <button className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+          <Link
+            to="/post-job"
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+          >
             <Plus className="size-4" />
             Post a job
-          </button>
+          </Link>
         </header>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -129,7 +88,7 @@ function JobsPage() {
 
         <section className="mt-5 grid gap-4">
           {visible.map((j) => (
-            <article key={j.title} className="surface-card hover-lift p-6">
+            <article key={j.id} className="surface-card hover-lift p-6">
               <div className="flex flex-wrap items-start gap-4">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
@@ -160,12 +119,20 @@ function JobsPage() {
                     {j.applicants} applicants
                   </span>
                   <div className="flex gap-2">
-                    <button className="rounded-lg border border-border px-3 py-2 text-xs font-medium transition-colors hover:bg-accent">
+                    <Link
+                      to="/job/$jobId/edit"
+                      params={{ jobId: j.id }}
+                      className="rounded-lg border border-border px-3 py-2 text-xs font-medium transition-colors hover:bg-accent"
+                    >
                       Edit post
-                    </button>
-                    <button className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+                    </Link>
+                    <Link
+                      to="/job/$jobId/applicants"
+                      params={{ jobId: j.id }}
+                      className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                    >
                       View applicants
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

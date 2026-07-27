@@ -12,9 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TalentRouteImport } from './routes/talent'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PostJobRouteImport } from './routes/post-job'
+import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
+import { Route as JobJobIdEditRouteImport } from './routes/job.$jobId.edit'
+import { Route as JobJobIdApplicantsRouteImport } from './routes/job.$jobId.applicants'
 
 const TalentRoute = TalentRouteImport.update({
   id: '/talent',
@@ -29,6 +35,21 @@ const StatsRoute = StatsRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostJobRoute = PostJobRouteImport.update({
+  id: '/post-job',
+  path: '/post-job',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MessagesRoute = MessagesRouteImport.update({
@@ -46,54 +67,123 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsProfileRoute = SettingsProfileRouteImport.update({
+  id: '/settings/profile',
+  path: '/settings/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobJobIdEditRoute = JobJobIdEditRouteImport.update({
+  id: '/job/$jobId/edit',
+  path: '/job/$jobId/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobJobIdApplicantsRoute = JobJobIdApplicantsRouteImport.update({
+  id: '/job/$jobId/applicants',
+  path: '/job/$jobId/applicants',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/jobs': typeof JobsRoute
   '/messages': typeof MessagesRoute
+  '/notifications': typeof NotificationsRoute
+  '/post-job': typeof PostJobRoute
+  '/profile': typeof ProfileRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
+  '/settings/profile': typeof SettingsProfileRoute
+  '/job/$jobId/applicants': typeof JobJobIdApplicantsRoute
+  '/job/$jobId/edit': typeof JobJobIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/jobs': typeof JobsRoute
   '/messages': typeof MessagesRoute
+  '/notifications': typeof NotificationsRoute
+  '/post-job': typeof PostJobRoute
+  '/profile': typeof ProfileRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
+  '/settings/profile': typeof SettingsProfileRoute
+  '/job/$jobId/applicants': typeof JobJobIdApplicantsRoute
+  '/job/$jobId/edit': typeof JobJobIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/jobs': typeof JobsRoute
   '/messages': typeof MessagesRoute
+  '/notifications': typeof NotificationsRoute
+  '/post-job': typeof PostJobRoute
+  '/profile': typeof ProfileRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
+  '/settings/profile': typeof SettingsProfileRoute
+  '/job/$jobId/applicants': typeof JobJobIdApplicantsRoute
+  '/job/$jobId/edit': typeof JobJobIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/jobs' | '/messages' | '/sitemap.xml' | '/stats' | '/talent'
+  fullPaths:
+    | '/'
+    | '/jobs'
+    | '/messages'
+    | '/notifications'
+    | '/post-job'
+    | '/profile'
+    | '/sitemap.xml'
+    | '/stats'
+    | '/talent'
+    | '/settings/profile'
+    | '/job/$jobId/applicants'
+    | '/job/$jobId/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/jobs' | '/messages' | '/sitemap.xml' | '/stats' | '/talent'
+  to:
+    | '/'
+    | '/jobs'
+    | '/messages'
+    | '/notifications'
+    | '/post-job'
+    | '/profile'
+    | '/sitemap.xml'
+    | '/stats'
+    | '/talent'
+    | '/settings/profile'
+    | '/job/$jobId/applicants'
+    | '/job/$jobId/edit'
   id:
     | '__root__'
     | '/'
     | '/jobs'
     | '/messages'
+    | '/notifications'
+    | '/post-job'
+    | '/profile'
     | '/sitemap.xml'
     | '/stats'
     | '/talent'
+    | '/settings/profile'
+    | '/job/$jobId/applicants'
+    | '/job/$jobId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   JobsRoute: typeof JobsRoute
   MessagesRoute: typeof MessagesRoute
+  NotificationsRoute: typeof NotificationsRoute
+  PostJobRoute: typeof PostJobRoute
+  ProfileRoute: typeof ProfileRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StatsRoute: typeof StatsRoute
   TalentRoute: typeof TalentRoute
+  SettingsProfileRoute: typeof SettingsProfileRoute
+  JobJobIdApplicantsRoute: typeof JobJobIdApplicantsRoute
+  JobJobIdEditRoute: typeof JobJobIdEditRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -119,6 +209,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/post-job': {
+      id: '/post-job'
+      path: '/post-job'
+      fullPath: '/post-job'
+      preLoaderRoute: typeof PostJobRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/messages': {
       id: '/messages'
       path: '/messages'
@@ -140,6 +251,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/profile': {
+      id: '/settings/profile'
+      path: '/settings/profile'
+      fullPath: '/settings/profile'
+      preLoaderRoute: typeof SettingsProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/job/$jobId/edit': {
+      id: '/job/$jobId/edit'
+      path: '/job/$jobId/edit'
+      fullPath: '/job/$jobId/edit'
+      preLoaderRoute: typeof JobJobIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/job/$jobId/applicants': {
+      id: '/job/$jobId/applicants'
+      path: '/job/$jobId/applicants'
+      fullPath: '/job/$jobId/applicants'
+      preLoaderRoute: typeof JobJobIdApplicantsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -147,9 +279,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   JobsRoute: JobsRoute,
   MessagesRoute: MessagesRoute,
+  NotificationsRoute: NotificationsRoute,
+  PostJobRoute: PostJobRoute,
+  ProfileRoute: ProfileRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StatsRoute: StatsRoute,
   TalentRoute: TalentRoute,
+  SettingsProfileRoute: SettingsProfileRoute,
+  JobJobIdApplicantsRoute: JobJobIdApplicantsRoute,
+  JobJobIdEditRoute: JobJobIdEditRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
