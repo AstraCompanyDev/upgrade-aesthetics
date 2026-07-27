@@ -72,6 +72,13 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           </div>
           <div className="ml-auto flex items-center gap-3">
             <Link
+              to="/freelancer"
+              className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground sm:flex"
+            >
+              <ArrowLeftRight className="size-3.5" />
+              Freelancer view
+            </Link>
+            <Link
               to="/notifications"
               aria-label="Notifications"
               className="relative flex size-10 items-center justify-center rounded-full border border-border bg-surface text-muted-foreground transition-colors hover:text-foreground"
