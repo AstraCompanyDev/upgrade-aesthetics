@@ -98,7 +98,7 @@ function StatsPage() {
             <p className="text-sm text-muted-foreground">Amount invoiced per month</p>
             <div className="mt-8 flex h-56 items-end gap-4">
               {spend.map((s) => (
-                <div key={s.month} className="flex min-w-0 flex-1 flex-col items-center gap-3">
+                <div key={s.month} className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-3">
                   <div
                     className="w-full rounded-t-xl gradient-brand transition-all"
                     style={{ height: `${s.value}%` }}
