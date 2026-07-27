@@ -23,11 +23,8 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-sidebar px-5 py-6 text-sidebar-foreground lg:flex">
-        <Link to="/" className="flex items-center gap-2 px-2">
-          <span className="flex size-8 items-center justify-center rounded-lg gradient-brand font-display text-sm font-bold text-primary-foreground">
-            Z
-          </span>
-          <span className="font-display text-lg font-bold tracking-tight">ZeeWork</span>
+        <Link to="/" className="flex items-center px-2" aria-label="ZeeWork home">
+          <img src="/zeework-logo-light.svg" alt="ZeeWork" className="h-7 w-auto" />
         </Link>
 
         <nav className="mt-9 flex flex-col gap-1">
@@ -63,7 +60,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-20 flex items-center gap-4 border-b border-border bg-background/80 px-5 py-4 backdrop-blur-md lg:px-10">
-          <span className="font-display text-base font-bold lg:hidden">ZeeWork</span>
+          <img src="/zeework-logo.svg" alt="ZeeWork" className="h-6 w-auto lg:hidden" />
           <div className="relative hidden max-w-md flex-1 md:block">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <input
