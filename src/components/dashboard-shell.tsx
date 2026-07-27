@@ -12,11 +12,11 @@ import {
 import type { ReactNode } from "react";
 
 const nav = [
-  { label: "Dashboard", icon: LayoutGrid, active: true },
-  { label: "My Stats", icon: ChartNoAxesColumn },
-  { label: "Jobs", icon: Briefcase },
-  { label: "Talent", icon: Users },
-  { label: "Messages", icon: MessageSquare, badge: 1 },
+  { label: "Dashboard", icon: LayoutGrid, to: "/" as const, exact: true },
+  { label: "My Stats", icon: ChartNoAxesColumn, to: "/stats" as const },
+  { label: "Jobs", icon: Briefcase, to: "/jobs" as const },
+  { label: "Talent", icon: Users, to: "/talent" as const },
+  { label: "Messages", icon: MessageSquare, to: "/messages" as const, badge: 1 },
 ];
 
 export function DashboardShell({ children }: { children: ReactNode }) {
@@ -31,14 +31,12 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         </Link>
 
         <nav className="mt-9 flex flex-col gap-1">
-          {nav.map(({ label, icon: Icon, active, badge }) => (
-            <button
+          {nav.map(({ label, icon: Icon, to, exact, badge }) => (
+            <Link
               key={label}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
-                active
-                  ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
-                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
-              }`}
+              to={to}
+              activeOptions={{ exact: Boolean(exact) }}
+              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground data-[status=active]:bg-sidebar-accent data-[status=active]:font-medium data-[status=active]:text-sidebar-accent-foreground"
             >
               <Icon className="size-4" />
               {label}
@@ -47,9 +45,10 @@ export function DashboardShell({ children }: { children: ReactNode }) {
                   {badge}
                 </span>
               ) : null}
-            </button>
+            </Link>
           ))}
         </nav>
+
 
         <div className="mt-auto rounded-xl bg-sidebar-accent/60 p-4">
           <p className="font-display text-sm font-semibold">Hiring faster?</p>
