@@ -60,7 +60,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-20 flex items-center gap-4 border-b border-border bg-background/80 px-5 py-4 backdrop-blur-md lg:px-10">
-          <span className="font-display text-base font-bold lg:hidden">ZeeWork</span>
+          <img src="/zeework-logo.svg" alt="ZeeWork" className="h-6 w-auto lg:hidden" />
           <div className="relative hidden max-w-md flex-1 md:block">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <input
