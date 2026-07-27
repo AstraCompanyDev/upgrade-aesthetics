@@ -18,6 +18,7 @@ import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
 import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
 import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.shortlist'
 import { Route as JobJobIdEditRouteImport } from './routes/job.$jobId.edit'
@@ -69,6 +70,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FreelancerIndexRoute = FreelancerIndexRouteImport.update({
+  id: '/freelancer/',
+  path: '/freelancer/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsProfileRoute = SettingsProfileRouteImport.update({
   id: '/settings/profile',
   path: '/settings/profile',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/freelancer/': typeof FreelancerIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/freelancer': typeof FreelancerIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/freelancer/': typeof FreelancerIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/talent'
     | '/settings/profile'
+    | '/freelancer/'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/talent'
     | '/settings/profile'
+    | '/freelancer'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/talent'
     | '/settings/profile'
+    | '/freelancer/'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   StatsRoute: typeof StatsRoute
   TalentRoute: typeof TalentRoute
   SettingsProfileRoute: typeof SettingsProfileRoute
+  FreelancerIndexRoute: typeof FreelancerIndexRoute
   JobJobIdApplicantsRoute: typeof JobJobIdApplicantsRouteWithChildren
   JobJobIdEditRoute: typeof JobJobIdEditRoute
   JobJobIdShortlistRoute: typeof JobJobIdShortlistRoute
@@ -277,6 +290,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/freelancer/': {
+      id: '/freelancer/'
+      path: '/freelancer'
+      fullPath: '/freelancer/'
+      preLoaderRoute: typeof FreelancerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings/profile': {
       id: '/settings/profile'
       path: '/settings/profile'
@@ -338,6 +358,7 @@ const rootRouteChildren: RootRouteChildren = {
   StatsRoute: StatsRoute,
   TalentRoute: TalentRoute,
   SettingsProfileRoute: SettingsProfileRoute,
+  FreelancerIndexRoute: FreelancerIndexRoute,
   JobJobIdApplicantsRoute: JobJobIdApplicantsRouteWithChildren,
   JobJobIdEditRoute: JobJobIdEditRoute,
   JobJobIdShortlistRoute: JobJobIdShortlistRoute,
