@@ -25,6 +25,7 @@ import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.short
 import { Route as JobJobIdEditRouteImport } from './routes/job.$jobId.edit'
 import { Route as JobJobIdApplicantsRouteImport } from './routes/job.$jobId.applicants'
 import { Route as FreelancerFindWorkJobIdIndexRouteImport } from './routes/freelancer.find-work.$jobId.index'
+import { Route as FreelancerFindWorkJobIdApplyRouteImport } from './routes/freelancer.find-work.$jobId.apply'
 import { Route as JobJobIdApplicantsApplicantIdMessageRouteImport } from './routes/job.$jobId.applicants.$applicantId.message'
 
 const TalentRoute = TalentRouteImport.update({
@@ -108,6 +109,12 @@ const FreelancerFindWorkJobIdIndexRoute =
     path: '/freelancer/find-work/$jobId/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const FreelancerFindWorkJobIdApplyRoute =
+  FreelancerFindWorkJobIdApplyRouteImport.update({
+    id: '/freelancer/find-work/$jobId/apply',
+    path: '/freelancer/find-work/$jobId/apply',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const JobJobIdApplicantsApplicantIdMessageRoute =
   JobJobIdApplicantsApplicantIdMessageRouteImport.update({
     id: '/$applicantId/message',
@@ -131,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
   '/freelancer/find-work/': typeof FreelancerFindWorkIndexRoute
+  '/freelancer/find-work/$jobId/apply': typeof FreelancerFindWorkJobIdApplyRoute
   '/freelancer/find-work/$jobId/': typeof FreelancerFindWorkJobIdIndexRoute
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
@@ -150,6 +158,7 @@ export interface FileRoutesByTo {
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
   '/freelancer/find-work': typeof FreelancerFindWorkIndexRoute
+  '/freelancer/find-work/$jobId/apply': typeof FreelancerFindWorkJobIdApplyRoute
   '/freelancer/find-work/$jobId': typeof FreelancerFindWorkJobIdIndexRoute
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
@@ -170,6 +179,7 @@ export interface FileRoutesById {
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
   '/freelancer/find-work/': typeof FreelancerFindWorkIndexRoute
+  '/freelancer/find-work/$jobId/apply': typeof FreelancerFindWorkJobIdApplyRoute
   '/freelancer/find-work/$jobId/': typeof FreelancerFindWorkJobIdIndexRoute
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
@@ -191,6 +201,7 @@ export interface FileRouteTypes {
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
     | '/freelancer/find-work/'
+    | '/freelancer/find-work/$jobId/apply'
     | '/freelancer/find-work/$jobId/'
     | '/job/$jobId/applicants/$applicantId/message'
   fileRoutesByTo: FileRoutesByTo
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
     | '/freelancer/find-work'
+    | '/freelancer/find-work/$jobId/apply'
     | '/freelancer/find-work/$jobId'
     | '/job/$jobId/applicants/$applicantId/message'
   id:
@@ -229,6 +241,7 @@ export interface FileRouteTypes {
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
     | '/freelancer/find-work/'
+    | '/freelancer/find-work/$jobId/apply'
     | '/freelancer/find-work/$jobId/'
     | '/job/$jobId/applicants/$applicantId/message'
   fileRoutesById: FileRoutesById
@@ -249,6 +262,7 @@ export interface RootRouteChildren {
   JobJobIdEditRoute: typeof JobJobIdEditRoute
   JobJobIdShortlistRoute: typeof JobJobIdShortlistRoute
   FreelancerFindWorkIndexRoute: typeof FreelancerFindWorkIndexRoute
+  FreelancerFindWorkJobIdApplyRoute: typeof FreelancerFindWorkJobIdApplyRoute
   FreelancerFindWorkJobIdIndexRoute: typeof FreelancerFindWorkJobIdIndexRoute
 }
 
@@ -366,6 +380,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerFindWorkJobIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/freelancer/find-work/$jobId/apply': {
+      id: '/freelancer/find-work/$jobId/apply'
+      path: '/freelancer/find-work/$jobId/apply'
+      fullPath: '/freelancer/find-work/$jobId/apply'
+      preLoaderRoute: typeof FreelancerFindWorkJobIdApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/job/$jobId/applicants/$applicantId/message': {
       id: '/job/$jobId/applicants/$applicantId/message'
       path: '/$applicantId/message'
@@ -404,6 +425,7 @@ const rootRouteChildren: RootRouteChildren = {
   JobJobIdEditRoute: JobJobIdEditRoute,
   JobJobIdShortlistRoute: JobJobIdShortlistRoute,
   FreelancerFindWorkIndexRoute: FreelancerFindWorkIndexRoute,
+  FreelancerFindWorkJobIdApplyRoute: FreelancerFindWorkJobIdApplyRoute,
   FreelancerFindWorkJobIdIndexRoute: FreelancerFindWorkJobIdIndexRoute,
 }
 export const routeTree = rootRouteImport
