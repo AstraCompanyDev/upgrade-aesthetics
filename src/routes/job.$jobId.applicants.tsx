@@ -126,15 +126,20 @@ function ApplicantsPage() {
                   </span>
                   <div className="flex gap-2">
                     <Link
-                      to="/messages"
+                      to="/job/$jobId/applicants/$applicantId/message"
+                      params={{ jobId, applicantId: a.id }}
                       className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs font-medium transition-colors hover:bg-accent"
                     >
                       <MessageSquare className="size-3.5" />
                       Message
                     </Link>
-                    <button className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+                    <Link
+                      to="/job/$jobId/shortlist"
+                      params={{ jobId }}
+                      className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                    >
                       Shortlist
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

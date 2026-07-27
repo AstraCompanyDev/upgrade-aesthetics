@@ -19,6 +19,7 @@ import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
+import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.shortlist'
 import { Route as JobJobIdEditRouteImport } from './routes/job.$jobId.edit'
 import { Route as JobJobIdApplicantsRouteImport } from './routes/job.$jobId.applicants'
 import { Route as JobJobIdApplicantsApplicantIdMessageRouteImport } from './routes/job.$jobId.applicants.$applicantId.message'
@@ -73,6 +74,11 @@ const SettingsProfileRoute = SettingsProfileRouteImport.update({
   path: '/settings/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JobJobIdShortlistRoute = JobJobIdShortlistRouteImport.update({
+  id: '/job/$jobId/shortlist',
+  path: '/job/$jobId/shortlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JobJobIdEditRoute = JobJobIdEditRouteImport.update({
   id: '/job/$jobId/edit',
   path: '/job/$jobId/edit',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/settings/profile': typeof SettingsProfileRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
+  '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
 export interface FileRoutesByTo {
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/settings/profile': typeof SettingsProfileRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
+  '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
 export interface FileRoutesById {
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/settings/profile': typeof SettingsProfileRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
+  '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
 export interface FileRouteTypes {
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/settings/profile'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
+    | '/job/$jobId/shortlist'
     | '/job/$jobId/applicants/$applicantId/message'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/settings/profile'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
+    | '/job/$jobId/shortlist'
     | '/job/$jobId/applicants/$applicantId/message'
   id:
     | '__root__'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/settings/profile'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
+    | '/job/$jobId/shortlist'
     | '/job/$jobId/applicants/$applicantId/message'
   fileRoutesById: FileRoutesById
 }
@@ -197,6 +209,7 @@ export interface RootRouteChildren {
   SettingsProfileRoute: typeof SettingsProfileRoute
   JobJobIdApplicantsRoute: typeof JobJobIdApplicantsRouteWithChildren
   JobJobIdEditRoute: typeof JobJobIdEditRoute
+  JobJobIdShortlistRoute: typeof JobJobIdShortlistRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -271,6 +284,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/job/$jobId/shortlist': {
+      id: '/job/$jobId/shortlist'
+      path: '/job/$jobId/shortlist'
+      fullPath: '/job/$jobId/shortlist'
+      preLoaderRoute: typeof JobJobIdShortlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/job/$jobId/edit': {
       id: '/job/$jobId/edit'
       path: '/job/$jobId/edit'
@@ -320,6 +340,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsProfileRoute: SettingsProfileRoute,
   JobJobIdApplicantsRoute: JobJobIdApplicantsRouteWithChildren,
   JobJobIdEditRoute: JobJobIdEditRoute,
+  JobJobIdShortlistRoute: JobJobIdShortlistRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
