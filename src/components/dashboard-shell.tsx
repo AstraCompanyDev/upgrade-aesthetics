@@ -13,7 +13,7 @@ import {
 import type { ReactNode } from "react";
 
 const nav = [
-  { label: "Dashboard", icon: LayoutGrid, to: "/" as const, exact: true },
+  { label: "Dashboard", icon: LayoutGrid, to: "/dashboard" as const, exact: true },
   { label: "My Stats", icon: ChartNoAxesColumn, to: "/stats" as const },
   { label: "Jobs", icon: Briefcase, to: "/jobs" as const },
   { label: "Talent", icon: Users, to: "/talent" as const },
@@ -24,7 +24,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-sidebar px-5 py-6 text-sidebar-foreground lg:flex">
-        <Link to="/" className="flex items-center px-2" aria-label="ZeeWork home">
+        <Link to="/dashboard" className="flex items-center px-2" aria-label="ZeeWork home">
           <img src="/zeework-logo-light.svg" alt="ZeeWork" className="h-7 w-auto" />
         </Link>
 

@@ -17,7 +17,7 @@ import { Route as PostJobRouteImport } from './routes/post-job'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as JobsRouteImport } from './routes/jobs'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
 import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
 import { Route as FreelancerSettingsRouteImport } from './routes/freelancer.settings'
@@ -71,9 +71,9 @@ const JobsRoute = JobsRouteImport.update({
   path: '/jobs',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FreelancerIndexRoute = FreelancerIndexRouteImport.update({
@@ -141,7 +141,7 @@ const JobJobIdApplicantsApplicantIdMessageRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
@@ -164,7 +164,7 @@ export interface FileRoutesByFullPath {
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
@@ -188,7 +188,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
@@ -213,7 +213,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
+    | '/dashboard'
     | '/jobs'
     | '/messages'
     | '/notifications'
@@ -236,7 +236,7 @@ export interface FileRouteTypes {
     | '/job/$jobId/applicants/$applicantId/message'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
+    | '/dashboard'
     | '/jobs'
     | '/messages'
     | '/notifications'
@@ -259,7 +259,7 @@ export interface FileRouteTypes {
     | '/job/$jobId/applicants/$applicantId/message'
   id:
     | '__root__'
-    | '/'
+    | '/dashboard'
     | '/jobs'
     | '/messages'
     | '/notifications'
@@ -283,7 +283,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
   JobsRoute: typeof JobsRoute
   MessagesRoute: typeof MessagesRoute
   NotificationsRoute: typeof NotificationsRoute
@@ -363,11 +363,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/freelancer/': {
@@ -470,7 +470,7 @@ const JobJobIdApplicantsRouteWithChildren =
   JobJobIdApplicantsRoute._addFileChildren(JobJobIdApplicantsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
   JobsRoute: JobsRoute,
   MessagesRoute: MessagesRoute,
   NotificationsRoute: NotificationsRoute,
