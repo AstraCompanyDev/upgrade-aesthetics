@@ -1,18 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  ArrowUpRight,
+  ArrowRight,
   BadgeCheck,
-  CreditCard,
-  FileSearch,
-  Plus,
-  RefreshCw,
-  Send,
-  Sparkle,
-  UserPlus,
+  Clock3,
+  Globe2,
+  Menu,
+  Quote,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Wallet,
+  Users,
 } from "lucide-react";
-import { DashboardShell } from "@/components/dashboard-shell";
-import heroDocs from "@/assets/hero-docs.jpg";
+import heroImg from "@/assets/landing-hero.jpg";
+import trustImg from "@/assets/landing-trust.jpg";
 import gigFrontend from "@/assets/gig-frontend.jpg";
 import gigCloud from "@/assets/gig-cloud.jpg";
 import gigWeb from "@/assets/gig-webdesign.jpg";
@@ -20,358 +23,468 @@ import gigWeb from "@/assets/gig-webdesign.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ZeeWork Client Dashboard — Hire, Manage, Ship" },
+      { title: "ZeeWork — Hire Vetted Freelancers, Fast" },
       {
         name: "description",
         content:
-          "Track your team, review offers and manage every job posting from one modern ZeeWork client dashboard.",
+          "ZeeWork connects you with vetted freelancers in design, development and content. Post a job, review proposals and pay securely — all in one modern workspace.",
       },
-      { property: "og:title", content: "ZeeWork Client Dashboard" },
+      { property: "og:title", content: "ZeeWork — Hire Vetted Freelancers, Fast" },
       {
         property: "og:description",
-        content: "Your team, offers and job postings in one clean workspace.",
+        content:
+          "Post a job, review proposals and pay securely. The modern way to build a remote team.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Dashboard,
+  component: Landing,
 });
 
+const navLinks = [
+  { label: "How it works", href: "#how" },
+  { label: "Categories", href: "#categories" },
+  { label: "Why ZeeWork", href: "#why" },
+  { label: "Stories", href: "#stories" },
+];
+
+const trending = ["Designer", "Developer", "WordPress", "Copywriter", "Video editor"];
+
+const pillars = [
+  {
+    icon: Clock3,
+    title: "Flexibility",
+    body: "Ramp up and down — from a two-day sprint to a full-time embedded team.",
+  },
+  {
+    icon: Wallet,
+    title: "Cost saving",
+    body: "Pay only for hours worked. Transparent hourly rates that fit any budget.",
+  },
+  {
+    icon: Globe2,
+    title: "Access to talent",
+    body: "Hire the best from 150+ countries, matched to your brief in minutes.",
+  },
+];
+
+const steps = [
+  { n: "01", title: "Post your brief", body: "Describe the work. Our matcher shortlists talent instantly." },
+  { n: "02", title: "Compare proposals", body: "Review rates, portfolios and verified reviews side by side." },
+  { n: "03", title: "Hire and pay safely", body: "Milestones, contracts and invoicing handled by ZeeWork." },
+];
+
+const guarantees = [
+  {
+    icon: Search,
+    title: "See work as it's done",
+    body: "Check in on contractors as easily as if you shared an office.",
+  },
+  {
+    icon: Users,
+    title: "Build a team of experts",
+    body: "Assemble a global bench that scales with your roadmap.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Zero payroll hassle",
+    body: "We manage payments, invoicing and compliance for every hire.",
+  },
+];
+
+const categories = [
+  { img: gigWeb, title: "Graphic & Design", items: ["Logo design", "Social graphics", "Brand kits"] },
+  { img: gigFrontend, title: "Web Development", items: ["Website design", "WordPress", "E-commerce"] },
+  { img: gigCloud, title: "Cloud & DevOps", items: ["AWS setup", "CI/CD", "Monitoring"] },
+];
+
 const stats = [
-  { label: "Active jobs", value: "5", delta: "+2 this month" },
-  { label: "New applicants", value: "12", delta: "5 unreviewed" },
-  { label: "Open proposals", value: "8", delta: "3 expiring soon" },
-  { label: "Spend this month", value: "$2,450", delta: "Budget 68% used" },
+  { value: "500K+", label: "Freelancers" },
+  { value: "1M+", label: "Projects delivered" },
+  { value: "150+", label: "Countries" },
+  { value: "98%", label: "Client satisfaction" },
 ];
 
-const team = [
-  { name: "Clarisse K.", role: "Executive Role", initials: "CK", verified: false },
-  { name: "Sean W.", role: "Administration Work", initials: "SW", verified: true },
-  { name: "Usama I.", role: "Job for Usama", initials: "UI", verified: true },
-];
-
-const offers = [
+const testimonials = [
   {
-    img: gigFrontend,
-    author: "Muhammad M.",
-    title: "I will do frontend development for your web app",
-    days: 4,
-    price: 100,
-    status: "Pending",
+    quote:
+      "Working with ZeeWork gives our team everything we need to move fast. Hiring world-class freelancers is finally a breeze.",
+    name: "Sean W.",
+    role: "CoFoundersLab",
+    initials: "SW",
   },
   {
-    img: gigCloud,
-    author: "Raj B.",
-    title: "I will deploy your application in AWS with CI/CD",
-    days: 7,
-    price: 50,
-    status: "Pending",
+    quote:
+      "The quality of talent is outstanding. We built our entire product team here and couldn't be happier with the results.",
+    name: "Maria L.",
+    role: "TechStart Inc",
+    initials: "ML",
   },
   {
-    img: gigWeb,
-    author: "Oluwafemi A.",
-    title: "I will create a professional Wix website",
-    days: 5,
-    price: 100,
-    status: "Completed",
+    quote:
+      "ZeeWork changed how we staff projects. The flexibility and cost savings are genuinely game-changing.",
+    name: "David O.",
+    role: "Creative Studios",
+    initials: "DO",
   },
 ];
 
-const postings = [
-  { title: "CFL Management Team Position", type: "Hourly", applicants: 4, posted: "8 months ago" },
-  { title: "Figma Designer For Website — $350", type: "Fixed", applicants: 0, posted: "1 year ago" },
-  { title: "Figma Designer — $350", type: "Fixed", applicants: 0, posted: "1 year ago" },
-  { title: "Job For Clarisse", type: "Hourly", applicants: 0, posted: "1 year ago" },
-  {
-    title: "Business Site Backend Development",
-    type: "Hourly",
-    applicants: 1,
-    posted: "over 1 year ago",
-  },
-];
-
-const tips = [
-  { label: "Add your billing method", icon: CreditCard, done: true },
-  { label: "Post your first job", icon: Plus, done: true },
-  { label: "Invite talent to apply", icon: UserPlus, done: false },
-  { label: "Review proposals", icon: FileSearch, done: false },
-  { label: "Hire your perfect freelancer", icon: Sparkle, done: false },
-];
-
-const tabs = ["All", "Pending", "Completed", "Rejected"] as const;
-
-function Dashboard() {
-  const [tab, setTab] = useState<(typeof tabs)[number]>("All");
-  const visibleOffers = offers.filter((o) => tab === "All" || o.status === tab);
-  const tipsDone = tips.filter((t) => t.done).length;
+function Landing() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <DashboardShell>
-      <div className="mx-auto max-w-[1180px]">
-        <section className="relative overflow-hidden rounded-3xl gradient-brand px-7 py-8 text-primary-foreground sm:px-10 sm:py-11">
-          <div className="relative z-10 max-w-lg">
-            <span className="inline-flex rounded-full bg-primary-foreground/15 px-3 py-1 text-xs font-medium backdrop-blur-sm">
-              Monday, July 27th
-            </span>
-            <h1 className="mt-4 text-3xl font-bold sm:text-4xl">Good afternoon, Sean</h1>
-            <p className="mt-2 max-w-sm text-sm text-primary-foreground/85">
-              Three proposals are waiting on your review and two job posts have fresh applicants.
-            </p>
+    <div className="min-h-screen bg-background">
+      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1180px] items-center gap-6 px-5 py-4 lg:px-8">
+          <Link to="/" aria-label="ZeeWork home" className="shrink-0">
+            <img src="/zeework-logo.svg" alt="ZeeWork" width={140} height={28} className="h-7 w-auto" />
+          </Link>
+          <nav className="hidden items-center gap-7 text-sm font-medium text-muted-foreground lg:flex">
+            {navLinks.map((l) => (
+              <a key={l.href} href={l.href} className="transition-colors hover:text-foreground">
+                {l.label}
+              </a>
+            ))}
+          </nav>
+          <div className="ml-auto flex items-center gap-2">
             <Link
-              to="/post-job"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary-foreground px-5 py-2.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
+              to="/freelancer"
+              className="hidden rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block"
             >
-              <Plus className="size-4" />
-              Post a new job
+              Log in
             </Link>
+            <Link
+              to="/dashboard"
+              className="rounded-full gradient-brand px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+            >
+              Get started
+            </Link>
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label="Toggle menu"
+              aria-expanded={menuOpen}
+              className="flex size-10 items-center justify-center rounded-full border border-border text-muted-foreground lg:hidden"
+            >
+              <Menu className="size-4" />
+            </button>
+          </div>
+        </div>
+        {menuOpen && (
+          <nav className="border-t border-border bg-surface px-5 py-3 lg:hidden">
+            {navLinks.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className="block rounded-lg px-2 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+        )}
+      </header>
+
+      <main>
+        {/* Hero */}
+        <section className="relative overflow-hidden">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -left-32 -top-40 size-[420px] rounded-full bg-primary-soft blur-3xl"
+          />
+          <div className="relative mx-auto grid max-w-[1180px] gap-12 px-5 pb-16 pt-14 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8 lg:pb-24 lg:pt-20">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm">
+                <Sparkles className="size-3.5 text-primary" />
+                The world's fastest growing freelance platform
+              </span>
+              <h1 className="mt-6 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+                Forget the old rules.
+                <br />
+                <span className="bg-clip-text text-transparent gradient-brand">Hire the best</span>{" "}
+                people, right now.
+              </h1>
+              <p className="mt-5 max-w-lg text-base text-muted-foreground sm:text-lg">
+                ZeeWork matches your brief with vetted freelancers in minutes — then handles
+                contracts, milestones and payouts so you can focus on shipping.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center gap-2 rounded-full gradient-brand px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+                >
+                  Hire a freelancer
+                  <ArrowRight className="size-4" />
+                </Link>
+                <Link
+                  to="/freelancer"
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-6 py-3 text-sm font-semibold transition-colors hover:bg-accent"
+                >
+                  Become a freelancer
+                </Link>
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                <span className="font-medium text-foreground">Trending:</span>
+                {trending.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-border bg-surface px-3 py-1.5 font-medium"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <img
+                src={heroImg}
+                alt="Freelancers collaborating remotely on laptops"
+                width={1280}
+                height={1024}
+                className="w-full rounded-3xl border border-border object-cover shadow-[var(--shadow-lift)]"
+              />
+              <div className="surface-card absolute -bottom-6 left-4 flex items-center gap-3 p-4 sm:left-8">
+                <span className="flex size-10 items-center justify-center rounded-full bg-primary-soft text-accent-foreground">
+                  <BadgeCheck className="size-5" />
+                </span>
+                <div>
+                  <p className="font-display text-sm font-bold">4.9 / 5 average rating</p>
+                  <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="size-3 fill-primary text-primary" />
+                    ))}
+                    from 42,000 reviews
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Stats strip */}
+        <section className="border-y border-border bg-surface">
+          <div className="mx-auto grid max-w-[1180px] grid-cols-2 gap-6 px-5 py-10 lg:grid-cols-4 lg:px-8">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p className="font-display text-3xl font-bold sm:text-4xl">{s.value}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Why */}
+        <section id="why" className="mx-auto max-w-[1180px] px-5 py-20 lg:px-8">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+              Why online workteams
+            </p>
+            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
+              Top-tier talent, on your terms.
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Everything you need to build a remote team that performs like an in-house one.
+            </p>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {pillars.map(({ icon: Icon, title, body }) => (
+              <article key={title} className="surface-card hover-lift p-7">
+                <span className="flex size-12 items-center justify-center rounded-xl gradient-brand text-primary-foreground">
+                  <Icon className="size-5" />
+                </span>
+                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* How it works */}
+        <section id="how" className="bg-surface py-20">
+          <div className="mx-auto max-w-[1180px] px-5 lg:px-8">
+            <h2 className="max-w-xl text-3xl font-bold sm:text-4xl">
+              Find talent the right way.
+            </h2>
+            <p className="mt-3 max-w-2xl text-muted-foreground">
+              Work with the largest network of independent professionals — from quick turnarounds
+              to full business transformations.
+            </p>
+            <ol className="mt-10 grid gap-5 md:grid-cols-3">
+              {steps.map((s) => (
+                <li key={s.n} className="rounded-2xl border border-border bg-background p-7">
+                  <span className="font-display text-sm font-bold text-primary">{s.n}</span>
+                  <h3 className="mt-3 text-lg font-semibold">{s.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{s.body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Guarantee */}
+        <section className="mx-auto grid max-w-[1180px] items-center gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8">
+          <div>
+            <h2 className="text-3xl font-bold sm:text-4xl">
+              Guaranteed work. Guaranteed payment.
+            </h2>
+            <ul className="mt-8 flex flex-col gap-6">
+              {guarantees.map(({ icon: Icon, title, body }) => (
+                <li key={title} className="flex gap-4">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-accent-foreground">
+                    <Icon className="size-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-semibold">{title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
           <img
-            src={heroDocs}
-            alt="Illustration of proposal and invoice documents"
-            width={900}
-            height={600}
-            className="pointer-events-none absolute -right-6 top-1/2 hidden w-[420px] -translate-y-1/2 mix-blend-luminosity opacity-70 lg:block"
+            src={trustImg}
+            alt="Illustration of protected payments and contracts"
+            width={1200}
+            height={960}
+            loading="lazy"
+            className="w-full rounded-3xl border border-border object-cover shadow-[var(--shadow-soft)]"
           />
         </section>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label} className="surface-card p-5">
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {s.label}
-              </p>
-              <p className="mt-2 font-display text-2xl font-bold">{s.value}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{s.delta}</p>
-            </div>
-          ))}
-        </section>
-
-        <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-          <div className="flex min-w-0 flex-col gap-6">
-            <section>
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold">Your team</h2>
-                <button className="text-sm font-medium text-primary hover:underline">
-                  View all
-                </button>
+        {/* Categories */}
+        <section id="categories" className="bg-surface py-20">
+          <div className="mx-auto max-w-[1180px] px-5 lg:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h2 className="text-3xl font-bold sm:text-4xl">Looking for something?</h2>
+                <p className="mt-3 max-w-xl text-muted-foreground">
+                  Explore the most popular categories and find the right specialist for your project.
+                </p>
               </div>
-              <div className="mt-3 grid gap-4 sm:grid-cols-3">
-                {team.map((m) => (
-                  <div key={m.name} className="surface-card hover-lift p-5 text-center">
-                    <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary-soft font-display text-base font-bold text-accent-foreground">
-                      {m.initials}
-                    </span>
-                    <p className="mt-3 flex items-center justify-center gap-1 font-semibold">
-                      {m.name}
-                      {m.verified && <BadgeCheck className="size-4 text-primary" />}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{m.role}</p>
+              <Link
+                to="/talent"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+              >
+                Browse all talent
+                <ArrowRight className="size-4" />
+              </Link>
+            </div>
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              {categories.map((c) => (
+                <article
+                  key={c.title}
+                  className="hover-lift overflow-hidden rounded-2xl border border-border bg-background"
+                >
+                  <img
+                    src={c.img}
+                    alt={c.title}
+                    width={640}
+                    height={512}
+                    loading="lazy"
+                    className="h-40 w-full object-cover"
+                  />
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold">{c.title}</h3>
+                    <ul className="mt-3 flex flex-col gap-1.5 text-sm text-muted-foreground">
+                      {c.items.map((i) => (
+                        <li key={i}>{i}</li>
+                      ))}
+                    </ul>
                     <Link
-                      to="/messages"
-                      className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2 text-sm font-medium transition-colors hover:bg-accent"
+                      to="/talent"
+                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                     >
-                      <Send className="size-3.5" />
-                      Message
+                      Explore
+                      <ArrowRight className="size-4" />
                     </Link>
                   </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="surface-card p-6">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <h2 className="text-lg font-semibold">Latest offers</h2>
-                <div className="flex gap-1 rounded-full bg-muted p-1">
-                  {tabs.map((t) => (
-                    <button
-                      key={t}
-                      onClick={() => setTab(t)}
-                      className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                        tab === t
-                          ? "bg-surface text-foreground shadow-sm"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      {t}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {visibleOffers.map((o) => (
-                  <article
-                    key={o.title}
-                    className="hover-lift overflow-hidden rounded-xl border border-border bg-surface"
-                  >
-                    <img
-                      src={o.img}
-                      alt={o.title}
-                      width={640}
-                      height={512}
-                      loading="lazy"
-                      className="h-32 w-full object-cover"
-                    />
-                    <div className="p-4">
-                      <p className="text-xs font-medium text-muted-foreground">{o.author}</p>
-                      <h3 className="mt-1 line-clamp-2 text-sm font-semibold leading-snug">
-                        {o.title}
-                      </h3>
-                      <div className="mt-3 flex items-end justify-between">
-                        <div>
-                          <p className="text-xs text-muted-foreground">Est. {o.days} days</p>
-                          <p className="font-display text-lg font-bold">${o.price}</p>
-                        </div>
-                        <button className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90">
-                          Order
-                          <ArrowUpRight className="size-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-                {visibleOffers.length === 0 && (
-                  <p className="py-8 text-sm text-muted-foreground">No {tab.toLowerCase()} offers.</p>
-                )}
-              </div>
-            </section>
-
-            <section className="surface-card overflow-hidden">
-              <div className="flex items-center justify-between border-b border-border px-6 py-5">
-                <h2 className="text-lg font-semibold">Your job postings</h2>
-                <button
-                  aria-label="Refresh job postings"
-                  className="flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:text-primary"
-                >
-                  <RefreshCw className="size-4" />
-                </button>
-              </div>
-              <ul className="divide-y divide-border">
-                {postings.map((p) => (
-                  <li
-                    key={p.title}
-                    className="flex flex-wrap items-center gap-4 px-6 py-5 transition-colors hover:bg-muted/60"
-                  >
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold">{p.title}</h3>
-                      <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                        <span className="rounded-full bg-muted px-2.5 py-1 font-medium">
-                          Public · {p.type}
-                        </span>
-                        <span className="rounded-full bg-primary-soft px-2.5 py-1 font-medium text-accent-foreground">
-                          Open
-                        </span>
-                        <span>Posted {p.posted}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`text-xs font-semibold ${
-                          p.applicants ? "text-primary" : "text-muted-foreground"
-                        }`}
-                      >
-                        {p.applicants ? `${p.applicants} new applicants` : "No new applicants"}
-                      </span>
-                      <Link
-                        to="/jobs"
-                        className="rounded-lg border border-border px-3 py-2 text-xs font-medium transition-colors hover:bg-accent"
-                      >
-                        Job post
-                      </Link>
-                      <Link
-                        to="/talent"
-                        className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-                      >
-                        Find applicants
-                      </Link>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <div className="flex items-center justify-center gap-2 border-t border-border px-6 py-4 text-sm">
-                <button className="px-3 py-1.5 text-muted-foreground hover:text-foreground">
-                  Previous
-                </button>
-                {[1, 2, 3].map((n) => (
-                  <button
-                    key={n}
-                    className={`size-8 rounded-full text-sm font-medium transition-colors ${
-                      n === 1
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:bg-muted"
-                    }`}
-                  >
-                    {n}
-                  </button>
-                ))}
-                <button className="px-3 py-1.5 text-muted-foreground hover:text-foreground">
-                  Next
-                </button>
-              </div>
-            </section>
+                </article>
+              ))}
+            </div>
           </div>
+        </section>
 
-          <aside className="flex flex-col gap-6">
-            <section className="surface-card p-6">
-              <div className="flex items-baseline justify-between">
-                <h2 className="text-base font-semibold">Getting started</h2>
-                <span className="text-xs text-muted-foreground">
-                  {tipsDone}/{tips.length}
-                </span>
-              </div>
-              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted">
-                <div
-                  className="h-full rounded-full gradient-brand"
-                  style={{ width: `${(tipsDone / tips.length) * 100}%` }}
-                />
-              </div>
-              <ul className="mt-4 flex flex-col gap-1">
-                {tips.map(({ label, icon: Icon, done }) => (
-                  <li key={label}>
-                    <button className="flex w-full items-center gap-3 rounded-lg px-2 py-2.5 text-left text-sm transition-colors hover:bg-muted">
-                      <span
-                        className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${
-                          done ? "gradient-brand text-primary-foreground" : "bg-muted text-muted-foreground"
-                        }`}
-                      >
-                        <Icon className="size-4" />
-                      </span>
-                      <span className={done ? "text-muted-foreground line-through" : "font-medium"}>
-                        {label}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </section>
+        {/* Testimonials */}
+        <section id="stories" className="mx-auto max-w-[1180px] px-5 py-20 lg:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+            Testimonials
+          </p>
+          <h2 className="mt-3 text-3xl font-bold sm:text-4xl">What clients say</h2>
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {testimonials.map((t) => (
+              <figure key={t.name} className="surface-card flex h-full flex-col p-7">
+                <Quote className="size-6 text-primary" />
+                <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  “{t.quote}”
+                </blockquote>
+                <figcaption className="mt-6 flex items-center gap-3">
+                  <span className="flex size-10 items-center justify-center rounded-full bg-primary-soft font-display text-xs font-bold text-accent-foreground">
+                    {t.initials}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold">{t.name}</p>
+                    <p className="text-xs text-muted-foreground">{t.role}</p>
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
 
-            <section className="surface-card p-6">
-              <h2 className="text-base font-semibold">Recent activity</h2>
-              <ul className="mt-4 flex flex-col gap-4 text-sm">
-                <li className="flex gap-3">
-                  <span className="mt-1.5 size-2 shrink-0 rounded-full bg-primary" />
-                  <p>
-                    <span className="font-medium">Muhammad M.</span> sent a new proposal for frontend
-                    development.
-                  </p>
-                </li>
-                <li className="flex gap-3">
-                  <span className="mt-1.5 size-2 shrink-0 rounded-full bg-primary/50" />
-                  <p>
-                    <span className="font-medium">4 applicants</span> applied to CFL Management Team
-                    Position.
-                  </p>
-                </li>
-                <li className="flex gap-3">
-                  <span className="mt-1.5 size-2 shrink-0 rounded-full bg-muted-foreground/40" />
-                  <p>Invoice #2841 was paid to Oluwafemi A.</p>
-                </li>
-              </ul>
-            </section>
-          </aside>
+        {/* CTA */}
+        <section className="mx-auto max-w-[1180px] px-5 pb-20 lg:px-8">
+          <div className="relative overflow-hidden rounded-3xl gradient-brand px-7 py-14 text-center text-primary-foreground sm:px-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/80">
+              Start your journey today
+            </p>
+            <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-bold sm:text-4xl">
+              Crafting your digital dreams into reality.
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-sm text-primary-foreground/85">
+              You can have the best people. Right now. Right here.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link
+                to="/dashboard"
+                className="rounded-full bg-primary-foreground px-6 py-3 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
+              >
+                Hire talent
+              </Link>
+              <Link
+                to="/freelancer"
+                className="rounded-full border border-primary-foreground/40 px-6 py-3 text-sm font-semibold transition-colors hover:bg-primary-foreground/10"
+              >
+                Join as freelancer
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-border bg-surface">
+        <div className="mx-auto flex max-w-[1180px] flex-col gap-6 px-5 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+          <img src="/zeework-logo.svg" alt="ZeeWork" width={140} height={28} className="h-7 w-auto" />
+          <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            <Link to="/talent" className="hover:text-foreground">
+              Find talent
+            </Link>
+            <Link to="/freelancer/find-work" className="hover:text-foreground">
+              Find work
+            </Link>
+            <Link to="/post-job" className="hover:text-foreground">
+              Post a job
+            </Link>
+            <Link to="/dashboard" className="hover:text-foreground">
+              Client dashboard
+            </Link>
+          </nav>
+          <p className="text-xs text-muted-foreground">© 2026 ZeeWork. All rights reserved.</p>
         </div>
-      </div>
-    </DashboardShell>
+      </footer>
+    </div>
   );
 }

@@ -78,7 +78,7 @@ export function FreelancerShell({ children }: { children: ReactNode }) {
           </div>
           <div className="ml-auto flex items-center gap-3">
             <Link
-              to="/"
+              to="/dashboard"
               className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground sm:flex"
             >
               <ArrowLeftRight className="size-3.5" />
