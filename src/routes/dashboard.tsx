@@ -17,7 +17,7 @@ import gigFrontend from "@/assets/gig-frontend.jpg";
 import gigCloud from "@/assets/gig-cloud.jpg";
 import gigWeb from "@/assets/gig-webdesign.jpg";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
       { title: "ZeeWork Client Dashboard — Hire, Manage, Ship" },
