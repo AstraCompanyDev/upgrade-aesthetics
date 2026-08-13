@@ -167,13 +167,13 @@ function Landing() {
           </nav>
           <div className="ml-auto flex items-center gap-2">
             <Link
-              to="/freelancer"
+              to="/login"
               className="hidden rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block"
             >
               Log in
             </Link>
             <Link
-              to="/dashboard"
+              to="/join"
               className="rounded-full gradient-brand px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
             >
               Get started
@@ -254,7 +254,7 @@ function Landing() {
                   <ArrowRight className="size-4" />
                 </Link>
                 <Link
-                  to="/freelancer"
+                  to="/join"
                   className="inline-flex items-center gap-2 rounded-full bg-muted px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-accent"
                 >
                   Become a freelancer
@@ -519,7 +519,7 @@ function Landing() {
                   Hire talent
                 </Link>
                 <Link
-                  to="/freelancer"
+                  to="/join"
                   className="rounded-full bg-primary-foreground/15 px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-primary-foreground/25"
                 >
                   Join as freelancer
