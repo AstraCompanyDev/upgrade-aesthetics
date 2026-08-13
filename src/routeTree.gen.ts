@@ -17,6 +17,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PostJobRouteImport } from './routes/post-job'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MessagesRouteImport } from './routes/messages'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -72,6 +73,11 @@ const NotificationsRoute = NotificationsRouteImport.update({
 const MessagesRoute = MessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JoinRoute = JoinRouteImport.update({
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
   '/join': typeof JoinRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/post-job': typeof PostJobRoute
@@ -189,6 +196,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
   '/join': typeof JoinRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/post-job': typeof PostJobRoute
@@ -216,6 +224,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
   '/join': typeof JoinRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/post-job': typeof PostJobRoute
@@ -244,6 +253,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/jobs'
     | '/join'
+    | '/login'
     | '/messages'
     | '/notifications'
     | '/post-job'
@@ -270,6 +280,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/jobs'
     | '/join'
+    | '/login'
     | '/messages'
     | '/notifications'
     | '/post-job'
@@ -296,6 +307,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/jobs'
     | '/join'
+    | '/login'
     | '/messages'
     | '/notifications'
     | '/post-job'
@@ -323,6 +335,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   JobsRoute: typeof JobsRoute
   JoinRoute: typeof JoinRoute
+  LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
   NotificationsRoute: typeof NotificationsRoute
   PostJobRoute: typeof PostJobRoute
@@ -400,6 +413,13 @@ declare module '@tanstack/react-router' {
       path: '/messages'
       fullPath: '/messages'
       preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/join': {
@@ -534,6 +554,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   JobsRoute: JobsRoute,
   JoinRoute: JoinRoute,
+  LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
   NotificationsRoute: NotificationsRoute,
   PostJobRoute: PostJobRoute,
