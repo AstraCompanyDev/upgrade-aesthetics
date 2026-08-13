@@ -16,6 +16,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PostJobRouteImport } from './routes/post-job'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MessagesRouteImport } from './routes/messages'
+import { Route as JoinRouteImport } from './routes/join'
 import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
@@ -65,6 +66,11 @@ const NotificationsRoute = NotificationsRouteImport.update({
 const MessagesRoute = MessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinRoute = JoinRouteImport.update({
+  id: '/join',
+  path: '/join',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JobsRoute = JobsRouteImport.update({
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
+  '/join': typeof JoinRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/post-job': typeof PostJobRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
+  '/join': typeof JoinRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/post-job': typeof PostJobRoute
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
+  '/join': typeof JoinRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
   '/post-job': typeof PostJobRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/jobs'
+    | '/join'
     | '/messages'
     | '/notifications'
     | '/post-job'
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/jobs'
+    | '/join'
     | '/messages'
     | '/notifications'
     | '/post-job'
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/jobs'
+    | '/join'
     | '/messages'
     | '/notifications'
     | '/post-job'
@@ -298,6 +310,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   JobsRoute: typeof JobsRoute
+  JoinRoute: typeof JoinRoute
   MessagesRoute: typeof MessagesRoute
   NotificationsRoute: typeof NotificationsRoute
   PostJobRoute: typeof PostJobRoute
@@ -367,6 +380,13 @@ declare module '@tanstack/react-router' {
       path: '/messages'
       fullPath: '/messages'
       preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join': {
+      id: '/join'
+      path: '/join'
+      fullPath: '/join'
+      preLoaderRoute: typeof JoinRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/jobs': {
@@ -493,6 +513,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   JobsRoute: JobsRoute,
+  JoinRoute: JoinRoute,
   MessagesRoute: MessagesRoute,
   NotificationsRoute: NotificationsRoute,
   PostJobRoute: PostJobRoute,
