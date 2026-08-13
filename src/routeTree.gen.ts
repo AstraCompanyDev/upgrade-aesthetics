@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as TalentRouteImport } from './routes/talent'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -35,6 +36,11 @@ import { Route as FreelancerFindWorkJobIdIndexRouteImport } from './routes/freel
 import { Route as FreelancerFindWorkJobIdApplyRouteImport } from './routes/freelancer.find-work.$jobId.apply'
 import { Route as JobJobIdApplicantsApplicantIdMessageRouteImport } from './routes/job.$jobId.applicants.$applicantId.message'
 
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TalentRoute = TalentRouteImport.update({
   id: '/talent',
   path: '/talent',
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
@@ -205,6 +212,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
@@ -233,6 +241,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/stats'
     | '/talent'
+    | '/verify-email'
     | '/freelancer/earnings'
     | '/freelancer/proposals'
     | '/freelancer/settings'
@@ -289,6 +299,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/stats'
     | '/talent'
+    | '/verify-email'
     | '/freelancer/earnings'
     | '/freelancer/proposals'
     | '/freelancer/settings'
@@ -316,6 +327,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/stats'
     | '/talent'
+    | '/verify-email'
     | '/freelancer/earnings'
     | '/freelancer/proposals'
     | '/freelancer/settings'
@@ -344,6 +356,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StatsRoute: typeof StatsRoute
   TalentRoute: typeof TalentRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
   FreelancerEarningsRoute: typeof FreelancerEarningsRoute
   FreelancerProposalsRoute: typeof FreelancerProposalsRoute
   FreelancerSettingsRoute: typeof FreelancerSettingsRoute
@@ -359,6 +372,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/talent': {
       id: '/talent'
       path: '/talent'
@@ -563,6 +583,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StatsRoute: StatsRoute,
   TalentRoute: TalentRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
   FreelancerEarningsRoute: FreelancerEarningsRoute,
   FreelancerProposalsRoute: FreelancerProposalsRoute,
   FreelancerSettingsRoute: FreelancerSettingsRoute,
