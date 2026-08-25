@@ -30,6 +30,7 @@ import { Route as FreelancerSettingsRouteImport } from './routes/freelancer.sett
 import { Route as FreelancerProposalsRouteImport } from './routes/freelancer.proposals'
 import { Route as FreelancerProfileRouteImport } from './routes/freelancer.profile'
 import { Route as FreelancerEarningsRouteImport } from './routes/freelancer.earnings'
+import { Route as AgencyProfileRouteImport } from './routes/agency.profile'
 import { Route as FreelancerFindWorkIndexRouteImport } from './routes/freelancer.find-work.index'
 import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.shortlist'
 import { Route as JobJobIdEditRouteImport } from './routes/job.$jobId.edit'
@@ -143,6 +144,11 @@ const FreelancerEarningsRoute = FreelancerEarningsRouteImport.update({
   path: '/freelancer/earnings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgencyProfileRoute = AgencyProfileRouteImport.update({
+  id: '/agency/profile',
+  path: '/agency/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FreelancerFindWorkIndexRoute = FreelancerFindWorkIndexRouteImport.update({
   id: '/freelancer/find-work/',
   path: '/freelancer/find-work/',
@@ -197,6 +203,7 @@ export interface FileRoutesByFullPath {
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/agency/profile': typeof AgencyProfileRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/agency/profile': typeof AgencyProfileRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
@@ -258,6 +266,7 @@ export interface FileRoutesById {
   '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/agency/profile': typeof AgencyProfileRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
@@ -290,6 +299,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/talent'
     | '/verify-email'
+    | '/agency/profile'
     | '/freelancer/earnings'
     | '/freelancer/profile'
     | '/freelancer/proposals'
@@ -320,6 +330,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/talent'
     | '/verify-email'
+    | '/agency/profile'
     | '/freelancer/earnings'
     | '/freelancer/profile'
     | '/freelancer/proposals'
@@ -350,6 +361,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/talent'
     | '/verify-email'
+    | '/agency/profile'
     | '/freelancer/earnings'
     | '/freelancer/profile'
     | '/freelancer/proposals'
@@ -381,6 +393,7 @@ export interface RootRouteChildren {
   StatsRoute: typeof StatsRoute
   TalentRoute: typeof TalentRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
+  AgencyProfileRoute: typeof AgencyProfileRoute
   FreelancerEarningsRoute: typeof FreelancerEarningsRoute
   FreelancerProfileRoute: typeof FreelancerProfileRoute
   FreelancerProposalsRoute: typeof FreelancerProposalsRoute
@@ -545,6 +558,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerEarningsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agency/profile': {
+      id: '/agency/profile'
+      path: '/agency/profile'
+      fullPath: '/agency/profile'
+      preLoaderRoute: typeof AgencyProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/freelancer/find-work/': {
       id: '/freelancer/find-work/'
       path: '/freelancer/find-work'
@@ -624,6 +644,7 @@ const rootRouteChildren: RootRouteChildren = {
   StatsRoute: StatsRoute,
   TalentRoute: TalentRoute,
   VerifyEmailRoute: VerifyEmailRoute,
+  AgencyProfileRoute: AgencyProfileRoute,
   FreelancerEarningsRoute: FreelancerEarningsRoute,
   FreelancerProfileRoute: FreelancerProfileRoute,
   FreelancerProposalsRoute: FreelancerProposalsRoute,

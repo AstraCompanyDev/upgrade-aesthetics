@@ -5,6 +5,7 @@ import {
   Search,
   Settings,
   Wallet,
+  Building2,
   Briefcase,
   MessageSquare,
   ArrowLeftRight,
@@ -18,6 +19,7 @@ const nav = [
   { label: "My proposals", icon: Briefcase, to: "/freelancer/proposals" as const },
   { label: "Earnings", icon: Wallet, to: "/freelancer/earnings" as const },
   { label: "My profile", icon: UserRound, to: "/freelancer/profile" as const },
+  { label: "Agency profile", icon: Building2, to: "/agency/profile" as const },
   { label: "Messages", icon: MessageSquare, to: "/messages" as const, badge: 2 },
 ];
 
