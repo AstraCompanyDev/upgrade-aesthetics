@@ -5,6 +5,7 @@ import {
   Search,
   Settings,
   Wallet,
+  Building2,
   Briefcase,
   MessageSquare,
   ArrowLeftRight,
