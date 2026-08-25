@@ -492,7 +492,11 @@ function FreelancerProfilePage() {
                 {items.map((job) => (
                   <li key={job.title} className="py-5">
                     <p className="font-medium text-primary">{job.title}</p>
-                    {"rating" in job ? <div className="mt-2"><Stars rating={job.rating} /></div> : null}
+                    {typeof (job as { rating?: number }).rating === "number" ? (
+                      <div className="mt-2">
+                        <Stars rating={(job as { rating: number }).rating} />
+                      </div>
+                    ) : null}
                     <p className="mt-2 text-sm text-muted-foreground">{job.feedback}</p>
                     <div className="mt-3 flex items-center gap-6 text-sm">
                       <span className="font-display font-semibold">{job.amount}</span>
