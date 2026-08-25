@@ -28,6 +28,7 @@ import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
 import { Route as OnboardingBusinessRouteImport } from './routes/onboarding.business'
 import { Route as FreelancerSettingsRouteImport } from './routes/freelancer.settings'
 import { Route as FreelancerProposalsRouteImport } from './routes/freelancer.proposals'
+import { Route as FreelancerProfileRouteImport } from './routes/freelancer.profile'
 import { Route as FreelancerEarningsRouteImport } from './routes/freelancer.earnings'
 import { Route as FreelancerFindWorkIndexRouteImport } from './routes/freelancer.find-work.index'
 import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.shortlist'
@@ -132,6 +133,11 @@ const FreelancerProposalsRoute = FreelancerProposalsRouteImport.update({
   path: '/freelancer/proposals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FreelancerProfileRoute = FreelancerProfileRouteImport.update({
+  id: '/freelancer/profile',
+  path: '/freelancer/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FreelancerEarningsRoute = FreelancerEarningsRouteImport.update({
   id: '/freelancer/earnings',
   path: '/freelancer/earnings',
@@ -192,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/talent': typeof TalentRoute
   '/verify-email': typeof VerifyEmailRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
+  '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
@@ -221,6 +228,7 @@ export interface FileRoutesByTo {
   '/talent': typeof TalentRoute
   '/verify-email': typeof VerifyEmailRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
+  '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
@@ -251,6 +259,7 @@ export interface FileRoutesById {
   '/talent': typeof TalentRoute
   '/verify-email': typeof VerifyEmailRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
+  '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
@@ -282,6 +291,7 @@ export interface FileRouteTypes {
     | '/talent'
     | '/verify-email'
     | '/freelancer/earnings'
+    | '/freelancer/profile'
     | '/freelancer/proposals'
     | '/freelancer/settings'
     | '/onboarding/business'
@@ -311,6 +321,7 @@ export interface FileRouteTypes {
     | '/talent'
     | '/verify-email'
     | '/freelancer/earnings'
+    | '/freelancer/profile'
     | '/freelancer/proposals'
     | '/freelancer/settings'
     | '/onboarding/business'
@@ -340,6 +351,7 @@ export interface FileRouteTypes {
     | '/talent'
     | '/verify-email'
     | '/freelancer/earnings'
+    | '/freelancer/profile'
     | '/freelancer/proposals'
     | '/freelancer/settings'
     | '/onboarding/business'
@@ -370,6 +382,7 @@ export interface RootRouteChildren {
   TalentRoute: typeof TalentRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
   FreelancerEarningsRoute: typeof FreelancerEarningsRoute
+  FreelancerProfileRoute: typeof FreelancerProfileRoute
   FreelancerProposalsRoute: typeof FreelancerProposalsRoute
   FreelancerSettingsRoute: typeof FreelancerSettingsRoute
   OnboardingBusinessRoute: typeof OnboardingBusinessRoute
@@ -518,6 +531,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerProposalsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/freelancer/profile': {
+      id: '/freelancer/profile'
+      path: '/freelancer/profile'
+      fullPath: '/freelancer/profile'
+      preLoaderRoute: typeof FreelancerProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/freelancer/earnings': {
       id: '/freelancer/earnings'
       path: '/freelancer/earnings'
@@ -605,6 +625,7 @@ const rootRouteChildren: RootRouteChildren = {
   TalentRoute: TalentRoute,
   VerifyEmailRoute: VerifyEmailRoute,
   FreelancerEarningsRoute: FreelancerEarningsRoute,
+  FreelancerProfileRoute: FreelancerProfileRoute,
   FreelancerProposalsRoute: FreelancerProposalsRoute,
   FreelancerSettingsRoute: FreelancerSettingsRoute,
   OnboardingBusinessRoute: OnboardingBusinessRoute,

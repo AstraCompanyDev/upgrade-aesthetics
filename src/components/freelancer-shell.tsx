@@ -8,6 +8,7 @@ import {
   Briefcase,
   MessageSquare,
   ArrowLeftRight,
+  UserRound,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -16,6 +17,7 @@ const nav = [
   { label: "Find work", icon: Search, to: "/freelancer/find-work" as const },
   { label: "My proposals", icon: Briefcase, to: "/freelancer/proposals" as const },
   { label: "Earnings", icon: Wallet, to: "/freelancer/earnings" as const },
+  { label: "My profile", icon: UserRound, to: "/freelancer/profile" as const },
   { label: "Messages", icon: MessageSquare, to: "/messages" as const, badge: 2 },
 ];
 
