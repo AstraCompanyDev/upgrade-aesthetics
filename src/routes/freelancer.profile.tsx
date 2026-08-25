@@ -70,7 +70,7 @@ const experience = [
   },
 ];
 
-const workHistory = [
+const workHistory: { title: string; rating: number | null; feedback: string; amount: string; type: string }[] = [
   {
     title: "Electron Developer",
     rating: 0,
@@ -494,9 +494,9 @@ function FreelancerProfilePage() {
                 {items.map((job) => (
                   <li key={job.title} className="py-5">
                     <p className="font-medium text-primary">{job.title}</p>
-                    {typeof (job as { rating?: number }).rating === "number" ? (
+                    {job.rating !== null ? (
                       <div className="mt-2">
-                        <Stars rating={(job as { rating: number }).rating} />
+                        <Stars rating={job.rating} />
                       </div>
                     ) : null}
                     <p className="mt-2 text-sm text-muted-foreground">{job.feedback}</p>
