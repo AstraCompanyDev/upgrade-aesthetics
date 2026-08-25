@@ -137,15 +137,17 @@ const workHistory = [
   },
 ];
 
-const inProgress = [
+const inProgress: { title: string; rating: number | null; feedback: string; amount: string; type: string }[] = [
   {
     title: "Design system refresh for fintech dashboard",
+    rating: null,
     feedback: "Milestone 2 of 4 in review — on track for Friday.",
     amount: "$2,400",
     type: "Fixed Price",
   },
   {
     title: "Realtime chat feature build",
+    rating: null,
     feedback: "18h logged this week.",
     amount: "$45",
     type: "Hourly Rate",
