@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   BadgeCheck,
+  ChevronLeft,
+  ChevronRight,
   Github,
   GraduationCap,
   Link2,
@@ -212,7 +214,17 @@ function IconButton({
 
 function FreelancerProfilePage() {
   const [tab, setTab] = useState<"completed" | "progress">("completed");
-  const items = tab === "completed" ? workHistory : inProgress;
+  const [page, setPage] = useState(1);
+  const perPage = 4;
+  const allItems = tab === "completed" ? workHistory : inProgress;
+  const totalPages = Math.max(1, Math.ceil(allItems.length / perPage));
+  const currentPage = Math.min(page, totalPages);
+  const items = allItems.slice((currentPage - 1) * perPage, currentPage * perPage);
+
+  const switchTab = (key: "completed" | "progress") => {
+    setTab(key);
+    setPage(1);
+  };
 
   return (
     <FreelancerShell>
@@ -478,7 +490,7 @@ function FreelancerProfilePage() {
                 ).map(([key, label]) => (
                   <button
                     key={key}
-                    onClick={() => setTab(key)}
+                    onClick={() => switchTab(key)}
                     className={`-mb-px border-b-2 pb-3 text-sm font-semibold transition-colors ${
                       tab === key
                         ? "border-primary text-primary"
@@ -507,6 +519,48 @@ function FreelancerProfilePage() {
                   </li>
                 ))}
               </ul>
+
+              <nav
+                aria-label="Work history pages"
+                className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4"
+              >
+                <p className="text-xs text-muted-foreground">
+                  Showing {(currentPage - 1) * perPage + 1}–
+                  {Math.min(currentPage * perPage, allItems.length)} of {allItems.length}
+                </p>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => setPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    aria-label="Previous page"
+                    className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:text-muted-foreground"
+                  >
+                    <ChevronLeft className="size-4" />
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                    <button
+                      key={n}
+                      onClick={() => setPage(n)}
+                      aria-current={n === currentPage ? "page" : undefined}
+                      className={`inline-flex size-9 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+                        n === currentPage
+                          ? "bg-primary text-primary-foreground"
+                          : "border border-border text-muted-foreground hover:border-primary hover:text-primary"
+                      }`}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => setPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    aria-label="Next page"
+                    className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:text-muted-foreground"
+                  >
+                    <ChevronRight className="size-4" />
+                  </button>
+                </div>
+              </nav>
             </section>
           </div>
         </div>
