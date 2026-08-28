@@ -22,6 +22,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ContractsRouteImport } from './routes/contracts'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StatsIndexRouteImport } from './routes/stats.index'
 import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
@@ -106,6 +107,11 @@ const JobsRoute = JobsRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContractsRoute = ContractsRouteImport.update({
+  id: '/contracts',
+  path: '/contracts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -216,6 +222,7 @@ const JobJobIdApplicantsApplicantIdMessageRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contracts': typeof ContractsRoute
   '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
   '/join': typeof JoinRoute
@@ -251,6 +258,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contracts': typeof ContractsRoute
   '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
   '/join': typeof JoinRoute
@@ -286,6 +294,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contracts': typeof ContractsRoute
   '/dashboard': typeof DashboardRoute
   '/jobs': typeof JobsRoute
   '/join': typeof JoinRoute
@@ -323,6 +332,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/contracts'
     | '/dashboard'
     | '/jobs'
     | '/join'
@@ -358,6 +368,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/contracts'
     | '/dashboard'
     | '/jobs'
     | '/join'
@@ -392,6 +403,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/contracts'
     | '/dashboard'
     | '/jobs'
     | '/join'
@@ -428,6 +440,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContractsRoute: typeof ContractsRoute
   DashboardRoute: typeof DashboardRoute
   JobsRoute: typeof JobsRoute
   JoinRoute: typeof JoinRoute
@@ -548,6 +561,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contracts': {
+      id: '/contracts'
+      path: '/contracts'
+      fullPath: '/contracts'
+      preLoaderRoute: typeof ContractsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -723,6 +743,7 @@ const JobJobIdApplicantsRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContractsRoute: ContractsRoute,
   DashboardRoute: DashboardRoute,
   JobsRoute: JobsRoute,
   JoinRoute: JoinRoute,

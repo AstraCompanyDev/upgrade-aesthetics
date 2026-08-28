@@ -16,6 +16,7 @@ const nav = [
   { label: "Dashboard", icon: LayoutGrid, to: "/dashboard" as const, exact: true },
   { label: "My Stats", icon: ChartNoAxesColumn, to: "/stats" as const },
   { label: "Jobs", icon: Briefcase, to: "/jobs" as const },
+  { label: "Contracts", icon: FileText, to: "/contracts" as const },
   { label: "Talent", icon: Users, to: "/talent" as const },
   { label: "Messages", icon: MessageSquare, to: "/messages" as const, badge: 1 },
 ];
