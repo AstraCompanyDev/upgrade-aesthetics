@@ -117,32 +117,69 @@ function StatsPage() {
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section className="surface-card p-6">
-          <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h2 className="text-lg font-semibold">Monthly spend</h2>
-              <p className="text-sm text-muted-foreground">Amount invoiced per month</p>
+              <h2 className="text-lg font-semibold">Total spend</h2>
+              <p className="text-sm text-muted-foreground">
+                {spendView === "week" ? "Invoiced per week" : "Invoiced per day"}
+              </p>
             </div>
-            <Link
-              to="/stats/spending"
-              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-            >
-              Weekly breakdown
-              <ArrowUpRight className="size-3.5" />
-            </Link>
-          </div>
-          <div className="mt-8 flex h-56 items-end gap-4">
-            {spend.map((s) => (
-              <div
-                key={s.month}
-                className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-3"
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex rounded-full border border-border bg-surface p-1">
+                <button
+                  type="button"
+                  onClick={() => setSpendView("week")}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all ${
+                    spendView === "week"
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                  aria-pressed={spendView === "week"}
+                >
+                  <CalendarDays className="size-3.5" />
+                  Week
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSpendView("day")}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all ${
+                    spendView === "day"
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                  aria-pressed={spendView === "day"}
+                >
+                  <TrendingUp className="size-3.5" />
+                  Day
+                </button>
+              </div>
+              <Link
+                to="/stats/spending"
+                className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/15"
               >
-                <div
-                  className="w-full rounded-t-xl gradient-brand transition-all"
-                  style={{ height: `${s.value}%` }}
-                  role="img"
-                  aria-label={`${s.month}: ${s.value}% of peak spend`}
-                />
-                <span className="text-xs text-muted-foreground">{s.month}</span>
+                View spend details
+                <ArrowUpRight className="size-3.5" />
+              </Link>
+            </div>
+          </div>
+          <div className="mt-8 flex h-56 items-end gap-3">
+            {spendData.map((s) => (
+              <div
+                key={s.label}
+                className="group flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-3"
+              >
+                <div className="relative w-full">
+                  <div
+                    className="w-full rounded-t-xl gradient-brand transition-all group-hover:brightness-110"
+                    style={{ height: `${s.value}%` }}
+                    role="img"
+                    aria-label={`${s.label}: ${s.detail}`}
+                  />
+                  <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-xs font-semibold text-background opacity-0 transition-opacity group-hover:opacity-100">
+                    {s.detail}
+                  </span>
+                </div>
+                <span className="text-xs text-muted-foreground">{s.label}</span>
               </div>
             ))}
           </div>
