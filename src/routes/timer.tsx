@@ -128,11 +128,31 @@ function TimerPage() {
                 Log hours as you work, add memos to every block and stay covered by hourly payment
                 protection — with clients seeing exactly what they pay for.
               </p>
-              <div id="download" className="mt-7 flex flex-wrap items-center gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full gradient-brand px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5">
-                  <Download className="size-4" /> Download for macOS
-                </button>
-                <span className="text-xs text-muted-foreground">Free with every ZeeWork account</span>
+              <div id="download" className="mt-7">
+                <div className="flex flex-wrap items-center gap-3">
+                  <button className="inline-flex items-center gap-2 rounded-full gradient-brand px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5">
+                    <Download className="size-4" /> Download for {active.label}
+                  </button>
+                  <label className="flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5 text-sm">
+                    <span className="text-xs font-medium text-muted-foreground">Version</span>
+                    <select
+                      aria-label="App version"
+                      value={version}
+                      onChange={(e) => setVersion(Number(e.target.value))}
+                      className="bg-transparent text-sm font-semibold outline-none"
+                    >
+                      {active.versions.map((v, i) => (
+                        <option key={v} value={i}>
+                          {v}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Free with every ZeeWork account — {active.versions[version].replace(" (latest)", "")} for{" "}
+                  {active.label} · {active.note}
+                </p>
               </div>
             </div>
 
