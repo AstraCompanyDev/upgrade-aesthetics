@@ -56,7 +56,7 @@ const team = [
     success: "100%",
     jobs: 5,
     rate: "$15/hr",
-    lastContract: "Social media graphics — $5p/h",
+    currentContract: "Social media graphics — $5/hr",
     verified: true,
   },
   {
@@ -66,7 +66,7 @@ const team = [
     success: "90%",
     jobs: 27,
     rate: "$40/hr",
-    lastContract: "Figma Designer — $350",
+    currentContract: "Figma Designer — $350 fixed",
     verified: true,
   },
   {
@@ -76,7 +76,7 @@ const team = [
     success: "100%",
     jobs: 4,
     rate: "$112/hr",
-    lastContract: "Startup Business Advisors — $100p/h",
+    currentContract: "Startup Business Advisor — $100/hr",
     verified: false,
   },
   {
@@ -86,7 +86,7 @@ const team = [
     success: "95%",
     jobs: 2,
     rate: "$8/hr",
-    lastContract: "Anime artist — $6p/h",
+    currentContract: "Anime illustration — $6/hr",
     verified: false,
   },
 ];
