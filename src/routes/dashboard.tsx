@@ -259,11 +259,12 @@ function Dashboard() {
                   <ArrowRight className="size-4" />
                 </Link>
               </div>
-              <div className="-mx-1 mt-3 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {team.map((m) => (
+
+              <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {team.slice(0, 3).map((m) => (
                   <article
                     key={m.name}
-                    className="surface-card hover-lift flex w-[248px] shrink-0 snap-start flex-col p-5"
+                    className="surface-card hover-lift flex flex-col p-5"
                   >
                     <div className="flex items-center gap-3">
                       <span className="relative flex size-12 shrink-0 items-center justify-center rounded-full gradient-brand font-display text-sm font-bold text-primary-foreground">
