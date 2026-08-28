@@ -245,33 +245,80 @@ function Dashboard() {
           <div className="flex min-w-0 flex-col gap-6">
             <section>
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold">Your team</h2>
-                <button className="text-sm font-medium text-primary hover:underline">
+                <div>
+                  <h2 className="text-lg font-semibold">Your team</h2>
+                  <p className="text-xs text-muted-foreground">
+                    People you&apos;ve worked with — rehire in one click
+                  </p>
+                </div>
+                <Link
+                  to="/talent"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                >
                   View all
-                </button>
+                  <ArrowRight className="size-4" />
+                </Link>
               </div>
-              <div className="mt-3 grid gap-4 sm:grid-cols-3">
+              <div className="-mx-1 mt-3 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {team.map((m) => (
-                  <div key={m.name} className="surface-card hover-lift p-5 text-center">
-                    <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary-soft font-display text-base font-bold text-accent-foreground">
-                      {m.initials}
-                    </span>
-                    <p className="mt-3 flex items-center justify-center gap-1 font-semibold">
-                      {m.name}
-                      {m.verified && <BadgeCheck className="size-4 text-primary" />}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{m.role}</p>
-                    <Link
-                      to="/messages"
-                      className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2 text-sm font-medium transition-colors hover:bg-accent"
-                    >
-                      <Send className="size-3.5" />
-                      Message
-                    </Link>
-                  </div>
+                  <article
+                    key={m.name}
+                    className="surface-card hover-lift flex w-[248px] shrink-0 snap-start flex-col p-5"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="relative flex size-12 shrink-0 items-center justify-center rounded-full gradient-brand font-display text-sm font-bold text-primary-foreground">
+                        {m.initials}
+                        {m.verified && (
+                          <BadgeCheck className="absolute -bottom-0.5 -right-0.5 size-4 rounded-full bg-surface text-primary" />
+                        )}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate font-semibold leading-tight">{m.name}</p>
+                        <p className="truncate text-xs text-muted-foreground">{m.country}</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 grid grid-cols-3 divide-x divide-border rounded-xl bg-muted/60 py-2.5 text-center">
+                      <div>
+                        <p className="font-display text-sm font-bold tabular-nums">{m.success}</p>
+                        <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                          Success
+                        </p>
+                      </div>
+                      <div>
+                        <p className="font-display text-sm font-bold tabular-nums">{m.jobs}</p>
+                        <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                          Jobs
+                        </p>
+                      </div>
+                      <div>
+                        <p className="font-display text-sm font-bold tabular-nums">{m.rate}</p>
+                        <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                          Rate
+                        </p>
+                      </div>
+                    </div>
+
+                    <p className="mt-4 text-xs text-muted-foreground">Last contract together</p>
+                    <p className="mt-0.5 line-clamp-2 text-sm font-medium">{m.lastContract}</p>
+
+                    <div className="mt-auto flex gap-2 pt-5">
+                      <button className="flex-1 rounded-full border border-primary py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary-soft">
+                        Rehire
+                      </button>
+                      <Link
+                        to="/messages"
+                        aria-label={`Message ${m.name}`}
+                        className="flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                      >
+                        <Send className="size-4" />
+                      </Link>
+                    </div>
+                  </article>
                 ))}
               </div>
             </section>
+
 
             <section className="surface-card p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
