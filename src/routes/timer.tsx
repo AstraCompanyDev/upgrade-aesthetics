@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import {
   Activity,
   Apple,
@@ -48,13 +49,46 @@ const notTracked = [
   "Anything at all while the timer is paused",
 ];
 
-const platforms = [
-  { label: "macOS", note: "Apple silicon & Intel", icon: Apple },
-  { label: "Windows", note: "Windows 10 and later", icon: Monitor },
-  { label: "Linux", note: "Ubuntu, Fedora, Debian", icon: Terminal },
+type OsKey = "macos" | "windows" | "linux";
+
+const platforms: { key: OsKey; label: string; note: string; icon: typeof Apple; versions: string[] }[] = [
+  {
+    key: "macos",
+    label: "macOS",
+    note: "Apple silicon & Intel",
+    icon: Apple,
+    versions: ["1.8.2 (latest)", "1.8.0", "1.7.4"],
+  },
+  {
+    key: "windows",
+    label: "Windows",
+    note: "Windows 10 and later",
+    icon: Monitor,
+    versions: ["1.8.2 (latest)", "1.8.1", "1.7.4"],
+  },
+  {
+    key: "linux",
+    label: "Linux",
+    note: "Ubuntu, Fedora, Debian",
+    icon: Terminal,
+    versions: ["1.8.2 (latest)", "1.8.0", "1.7.3"],
+  },
 ];
 
+function detectOs(): OsKey {
+  if (typeof navigator === "undefined") return "macos";
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes("win")) return "windows";
+  if (ua.includes("linux")) return "linux";
+  return "macos";
+}
+
 function TimerPage() {
+  const detected = useMemo(detectOs, []);
+  const [selected, setSelected] = useState<OsKey>(detected);
+  const [version, setVersion] = useState(0);
+  const active = platforms.find((p) => p.key === selected)!;
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl">
@@ -94,11 +128,31 @@ function TimerPage() {
                 Log hours as you work, add memos to every block and stay covered by hourly payment
                 protection — with clients seeing exactly what they pay for.
               </p>
-              <div id="download" className="mt-7 flex flex-wrap items-center gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full gradient-brand px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5">
-                  <Download className="size-4" /> Download for macOS
-                </button>
-                <span className="text-xs text-muted-foreground">Free with every ZeeWork account</span>
+              <div id="download" className="mt-7">
+                <div className="flex flex-wrap items-center gap-3">
+                  <button className="inline-flex items-center gap-2 rounded-full gradient-brand px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5">
+                    <Download className="size-4" /> Download for {active.label}
+                  </button>
+                  <label className="flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5 text-sm">
+                    <span className="text-xs font-medium text-muted-foreground">Version</span>
+                    <select
+                      aria-label="App version"
+                      value={version}
+                      onChange={(e) => setVersion(Number(e.target.value))}
+                      className="bg-transparent text-sm font-semibold outline-none"
+                    >
+                      {active.versions.map((v, i) => (
+                        <option key={v} value={i}>
+                          {v}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Free with every ZeeWork account — {active.versions[version].replace(" (latest)", "")} for{" "}
+                  {active.label} · {active.note}
+                </p>
               </div>
             </div>
 
@@ -220,18 +274,35 @@ function TimerPage() {
         {/* Platforms */}
         <section className="mx-auto max-w-[1180px] px-5 pb-16 lg:px-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-center">
-            <h2 className="font-display text-3xl font-semibold md:w-64">Also available for</h2>
+            <div className="md:w-64">
+              <h2 className="font-display text-3xl font-semibold">Also available for</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                We detected <span className="font-semibold text-foreground">{platforms.find((p) => p.key === detected)!.label}</span> — pick any platform to switch.
+              </p>
+            </div>
             <div className="grid flex-1 gap-3 sm:grid-cols-3">
-              {platforms.map(({ label, note, icon: Icon }) => (
+              {platforms.map(({ key, label, note, icon: Icon }) => (
                 <button
                   key={label}
-                  className="surface-card hover-lift flex items-center gap-3 p-5 text-left"
+                  onClick={() => {
+                    setSelected(key);
+                    setVersion(0);
+                  }}
+                  aria-pressed={selected === key}
+                  className={`surface-card hover-lift flex items-center gap-3 p-5 text-left transition-shadow ${
+                    selected === key ? "ring-2 ring-primary" : ""
+                  }`}
                 >
                   <Icon className="size-5 text-primary" />
-                  <span>
+                  <span className="flex-1">
                     <span className="block text-sm font-semibold">{label}</span>
                     <span className="block text-xs text-muted-foreground">{note}</span>
                   </span>
+                  {selected === key ? (
+                    <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
+                      Selected
+                    </span>
+                  ) : null}
                 </button>
               ))}
             </div>
