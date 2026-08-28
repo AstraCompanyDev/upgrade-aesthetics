@@ -274,7 +274,12 @@ function TimerPage() {
         {/* Platforms */}
         <section className="mx-auto max-w-[1180px] px-5 pb-16 lg:px-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-center">
-            <h2 className="font-display text-3xl font-semibold md:w-64">Also available for</h2>
+            <div className="md:w-64">
+              <h2 className="font-display text-3xl font-semibold">Also available for</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                We detected <span className="font-semibold text-foreground">{platforms.find((p) => p.key === detected)!.label}</span> — pick any platform to switch.
+              </p>
+            </div>
             <div className="grid flex-1 gap-3 sm:grid-cols-3">
               {platforms.map(({ key, label, note, icon: Icon }) => (
                 <button
