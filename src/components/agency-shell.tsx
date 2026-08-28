@@ -9,32 +9,32 @@ import {
   Briefcase,
   MessageSquare,
   ArrowLeftRight,
-  UserRound,
-  Timer,
+  Users,
+  FileText,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
 const nav = [
-  { label: "Dashboard", icon: LayoutGrid, to: "/freelancer" as const, exact: true },
-  { label: "Find work", icon: Search, to: "/freelancer/find-work" as const },
-  { label: "My proposals", icon: Briefcase, to: "/freelancer/proposals" as const },
-  { label: "Earnings", icon: Wallet, to: "/freelancer/earnings" as const },
-  { label: "ZeeWork Timer", icon: Timer, to: "/timer" as const },
-  { label: "My profile", icon: UserRound, to: "/freelancer/profile" as const },
-  { label: "Agency dashboard", icon: Building2, to: "/agency" as const, exact: true },
-  { label: "Messages", icon: MessageSquare, to: "/messages" as const, badge: 2 },
+  { label: "Dashboard", icon: LayoutGrid, to: "/agency" as const, exact: true },
+  { label: "Find work", icon: Search, to: "/agency/find-work" as const },
+  { label: "Proposals", icon: Briefcase, to: "/agency/proposals" as const },
+  { label: "Contracts", icon: FileText, to: "/agency/contracts" as const },
+  { label: "Team", icon: Users, to: "/agency/team" as const },
+  { label: "Agency earnings", icon: Wallet, to: "/agency/earnings" as const },
+  { label: "Agency profile", icon: Building2, to: "/agency/profile" as const },
+  { label: "Messages", icon: MessageSquare, to: "/messages" as const, badge: 3 },
 ];
 
-export function FreelancerShell({ children }: { children: ReactNode }) {
+export function AgencyShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-sidebar px-5 py-6 text-sidebar-foreground lg:flex">
-        <Link to="/freelancer" className="flex items-center px-2" aria-label="ZeeWork home">
+        <Link to="/agency" className="flex items-center px-2" aria-label="ZeeWork agency home">
           <img src="/zeework-logo-light.svg" alt="ZeeWork" className="h-7 w-auto" />
         </Link>
 
         <span className="mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-sidebar-accent/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-sidebar-accent-foreground">
-          Freelancer
+          Agency
         </span>
 
         <nav className="mt-6 flex flex-col gap-1">
@@ -57,15 +57,15 @@ export function FreelancerShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="mt-auto rounded-xl bg-sidebar-accent/60 p-4">
-          <p className="font-display text-sm font-semibold">Available for work</p>
+          <p className="font-display text-sm font-semibold">Astra Studio</p>
           <p className="mt-1 text-xs text-sidebar-foreground/70">
-            Your profile is visible to clients hiring this week.
+            4 members · 61% utilization this week.
           </p>
           <Link
-            to="/freelancer/settings"
+            to="/agency/team"
             className="mt-3 flex w-full items-center justify-center rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           >
-            Edit profile
+            Manage team
           </Link>
         </div>
       </aside>
@@ -77,25 +77,18 @@ export function FreelancerShell({ children }: { children: ReactNode }) {
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="search"
-              placeholder="Search jobs, clients, skills"
-              aria-label="Search jobs"
+              placeholder="Search jobs, clients, members"
+              aria-label="Search agency jobs"
               className="h-10 w-full rounded-full border border-border bg-surface pl-9 pr-4 text-sm outline-none transition-shadow placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40"
             />
           </div>
           <div className="ml-auto flex items-center gap-3">
             <Link
-              to="/agency"
+              to="/freelancer"
               className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground sm:flex"
             >
               <ArrowLeftRight className="size-3.5" />
-              Agency view
-            </Link>
-            <Link
-              to="/dashboard"
-              className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground lg:flex"
-            >
-              <ArrowLeftRight className="size-3.5" />
-              Client view
+              Freelancer view
             </Link>
             <Link
               to="/notifications"
@@ -107,19 +100,19 @@ export function FreelancerShell({ children }: { children: ReactNode }) {
             </Link>
             <Link
               to="/freelancer/settings"
-              aria-label="Profile settings"
+              aria-label="Agency settings"
               className="hidden size-10 items-center justify-center rounded-full border border-border bg-surface text-muted-foreground transition-colors hover:text-foreground sm:flex"
             >
               <Settings className="size-4" />
             </Link>
             <Link
-              to="/freelancer/settings"
+              to="/agency/profile"
               className="flex items-center gap-2 rounded-full border border-border bg-surface py-1 pl-1 pr-3 transition-colors hover:bg-accent"
             >
               <span className="flex size-8 items-center justify-center rounded-full gradient-brand text-xs font-semibold text-primary-foreground">
-                AR
+                AS
               </span>
-              <span className="hidden text-sm font-medium sm:block">Amelia R.</span>
+              <span className="hidden text-sm font-medium sm:block">Astra Studio</span>
             </Link>
           </div>
         </header>
