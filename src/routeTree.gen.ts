@@ -23,6 +23,7 @@ import { Route as JoinRouteImport } from './routes/join'
 import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StatsIndexRouteImport } from './routes/stats.index'
 import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
 import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
 import { Route as OnboardingBusinessRouteImport } from './routes/onboarding.business'
@@ -108,6 +109,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const StatsIndexRoute = StatsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StatsRoute,
 } as any)
 const FreelancerIndexRoute = FreelancerIndexRouteImport.update({
   id: '/freelancer/',
@@ -200,7 +206,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/stats': typeof StatsRoute
+  '/stats': typeof StatsRouteWithChildren
   '/talent': typeof TalentRoute
   '/verify-email': typeof VerifyEmailRoute
   '/agency/profile': typeof AgencyProfileRoute
@@ -211,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
   '/freelancer/': typeof FreelancerIndexRoute
+  '/stats/': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
@@ -231,7 +238,6 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/stats': typeof StatsRoute
   '/talent': typeof TalentRoute
   '/verify-email': typeof VerifyEmailRoute
   '/agency/profile': typeof AgencyProfileRoute
@@ -242,6 +248,7 @@ export interface FileRoutesByTo {
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
   '/freelancer': typeof FreelancerIndexRoute
+  '/stats': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
@@ -263,7 +270,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/stats': typeof StatsRoute
+  '/stats': typeof StatsRouteWithChildren
   '/talent': typeof TalentRoute
   '/verify-email': typeof VerifyEmailRoute
   '/agency/profile': typeof AgencyProfileRoute
@@ -274,6 +281,7 @@ export interface FileRoutesById {
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
   '/freelancer/': typeof FreelancerIndexRoute
+  '/stats/': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
@@ -307,6 +315,7 @@ export interface FileRouteTypes {
     | '/onboarding/business'
     | '/settings/profile'
     | '/freelancer/'
+    | '/stats/'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
@@ -327,7 +336,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/signup'
     | '/sitemap.xml'
-    | '/stats'
     | '/talent'
     | '/verify-email'
     | '/agency/profile'
@@ -338,6 +346,7 @@ export interface FileRouteTypes {
     | '/onboarding/business'
     | '/settings/profile'
     | '/freelancer'
+    | '/stats'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
@@ -369,6 +378,7 @@ export interface FileRouteTypes {
     | '/onboarding/business'
     | '/settings/profile'
     | '/freelancer/'
+    | '/stats/'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
@@ -390,7 +400,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   SignupRoute: typeof SignupRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  StatsRoute: typeof StatsRoute
+  StatsRoute: typeof StatsRouteWithChildren
   TalentRoute: typeof TalentRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
   AgencyProfileRoute: typeof AgencyProfileRoute
@@ -509,6 +519,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stats/': {
+      id: '/stats/'
+      path: '/'
+      fullPath: '/stats/'
+      preLoaderRoute: typeof StatsIndexRouteImport
+      parentRoute: typeof StatsRoute
+    }
     '/freelancer/': {
       id: '/freelancer/'
       path: '/freelancer'
@@ -617,6 +634,16 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface StatsRouteChildren {
+  StatsIndexRoute: typeof StatsIndexRoute
+}
+
+const StatsRouteChildren: StatsRouteChildren = {
+  StatsIndexRoute: StatsIndexRoute,
+}
+
+const StatsRouteWithChildren = StatsRoute._addFileChildren(StatsRouteChildren)
+
 interface JobJobIdApplicantsRouteChildren {
   JobJobIdApplicantsApplicantIdMessageRoute: typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
@@ -641,7 +668,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   SignupRoute: SignupRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  StatsRoute: StatsRoute,
+  StatsRoute: StatsRouteWithChildren,
   TalentRoute: TalentRoute,
   VerifyEmailRoute: VerifyEmailRoute,
   AgencyProfileRoute: AgencyProfileRoute,
