@@ -84,6 +84,11 @@ function detectOs(): OsKey {
 }
 
 function TimerPage() {
+  const detected = useMemo(detectOs, []);
+  const [selected, setSelected] = useState<OsKey>(detected);
+  const [version, setVersion] = useState(0);
+  const active = platforms.find((p) => p.key === selected)!;
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl">
