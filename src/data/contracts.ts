@@ -108,6 +108,6 @@ export const activeContracts: ActiveContract[] = [...hourlyContracts(), ...fixed
 
 export const contractStatusStyles: Record<ActiveContract["status"], string> = {
   Active: "bg-primary-soft text-accent-foreground",
-  "Awaiting feedback": "bg-amber-100 text-amber-800",
+  "Awaiting feedback": "bg-secondary text-secondary-foreground",
   Paused: "bg-muted text-muted-foreground",
 };
