@@ -551,6 +551,9 @@ function Landing() {
             <Link to="/post-job" className="hover:text-foreground">
               Post a job
             </Link>
+            <Link to="/timer" className="hover:text-foreground">
+              ZeeWork Timer
+            </Link>
             <Link to="/dashboard" className="hover:text-foreground">
               Client dashboard
             </Link>

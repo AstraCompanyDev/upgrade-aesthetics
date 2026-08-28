@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as TimerRouteImport } from './routes/timer'
 import { Route as TalentRouteImport } from './routes/talent'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -47,6 +48,11 @@ import { Route as JobJobIdApplicantsApplicantIdMessageRouteImport } from './rout
 const VerifyEmailRoute = VerifyEmailRouteImport.update({
   id: '/verify-email',
   path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TimerRoute = TimerRouteImport.update({
+  id: '/timer',
+  path: '/timer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TalentRoute = TalentRouteImport.update({
@@ -235,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRouteWithChildren
   '/talent': typeof TalentRoute
+  '/timer': typeof TimerRoute
   '/verify-email': typeof VerifyEmailRoute
   '/agency/profile': typeof AgencyProfileRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
@@ -270,6 +277,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/talent': typeof TalentRoute
+  '/timer': typeof TimerRoute
   '/verify-email': typeof VerifyEmailRoute
   '/agency/profile': typeof AgencyProfileRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
@@ -307,6 +315,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRouteWithChildren
   '/talent': typeof TalentRoute
+  '/timer': typeof TimerRoute
   '/verify-email': typeof VerifyEmailRoute
   '/agency/profile': typeof AgencyProfileRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
@@ -345,6 +354,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/stats'
     | '/talent'
+    | '/timer'
     | '/verify-email'
     | '/agency/profile'
     | '/freelancer/earnings'
@@ -380,6 +390,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/talent'
+    | '/timer'
     | '/verify-email'
     | '/agency/profile'
     | '/freelancer/earnings'
@@ -416,6 +427,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/stats'
     | '/talent'
+    | '/timer'
     | '/verify-email'
     | '/agency/profile'
     | '/freelancer/earnings'
@@ -453,6 +465,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StatsRoute: typeof StatsRouteWithChildren
   TalentRoute: typeof TalentRoute
+  TimerRoute: typeof TimerRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
   AgencyProfileRoute: typeof AgencyProfileRoute
   FreelancerEarningsRoute: typeof FreelancerEarningsRoute
@@ -477,6 +490,13 @@ declare module '@tanstack/react-router' {
       path: '/verify-email'
       fullPath: '/verify-email'
       preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/timer': {
+      id: '/timer'
+      path: '/timer'
+      fullPath: '/timer'
+      preLoaderRoute: typeof TimerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/talent': {
@@ -756,6 +776,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StatsRoute: StatsRouteWithChildren,
   TalentRoute: TalentRoute,
+  TimerRoute: TimerRoute,
   VerifyEmailRoute: VerifyEmailRoute,
   AgencyProfileRoute: AgencyProfileRoute,
   FreelancerEarningsRoute: FreelancerEarningsRoute,
