@@ -65,6 +65,9 @@ const performers = [
 ];
 
 function StatsPage() {
+  const [spendView, setSpendView] = useState<"week" | "day">("week");
+  const spendData = spendView === "week" ? spendByWeek : spendByDay;
+
   return (
     <div className="mx-auto max-w-[1180px]">
       <header className="flex flex-wrap items-end justify-between gap-4">
