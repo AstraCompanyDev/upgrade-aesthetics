@@ -49,11 +49,39 @@ const notTracked = [
   "Anything at all while the timer is paused",
 ];
 
-const platforms = [
-  { label: "macOS", note: "Apple silicon & Intel", icon: Apple },
-  { label: "Windows", note: "Windows 10 and later", icon: Monitor },
-  { label: "Linux", note: "Ubuntu, Fedora, Debian", icon: Terminal },
+type OsKey = "macos" | "windows" | "linux";
+
+const platforms: { key: OsKey; label: string; note: string; icon: typeof Apple; versions: string[] }[] = [
+  {
+    key: "macos",
+    label: "macOS",
+    note: "Apple silicon & Intel",
+    icon: Apple,
+    versions: ["1.8.2 (latest)", "1.8.0", "1.7.4"],
+  },
+  {
+    key: "windows",
+    label: "Windows",
+    note: "Windows 10 and later",
+    icon: Monitor,
+    versions: ["1.8.2 (latest)", "1.8.1", "1.7.4"],
+  },
+  {
+    key: "linux",
+    label: "Linux",
+    note: "Ubuntu, Fedora, Debian",
+    icon: Terminal,
+    versions: ["1.8.2 (latest)", "1.8.0", "1.7.3"],
+  },
 ];
+
+function detectOs(): OsKey {
+  if (typeof navigator === "undefined") return "macos";
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes("win")) return "windows";
+  if (ua.includes("linux")) return "linux";
+  return "macos";
+}
 
 function TimerPage() {
   return (
