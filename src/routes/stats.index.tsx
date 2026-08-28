@@ -64,6 +64,149 @@ const performers = [
   { name: "Oluwafemi A.", initials: "OA", jobs: 2, spend: "$2,100", rating: "4.8" },
 ];
 
+function smoothPath(points: { x: number; y: number }[]): string {
+  if (points.length < 2) return "";
+  let d = `M ${points[0]!.x} ${points[0]!.y}`;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[Math.max(0, i - 1)]!;
+    const p1 = points[i]!;
+    const p2 = points[i + 1]!;
+    const p3 = points[Math.min(points.length - 1, i + 2)]!;
+    const c1x = p1.x + (p2.x - p0.x) / 6;
+    const c1y = p1.y + (p2.y - p0.y) / 6;
+    const c2x = p2.x - (p3.x - p1.x) / 6;
+    const c2y = p2.y - (p3.y - p1.y) / 6;
+    d += ` C ${c1x} ${c1y}, ${c2x} ${c2y}, ${p2.x} ${p2.y}`;
+  }
+  return d;
+}
+
+function SpendChart({ data }: { data: SpendPoint[] }) {
+  const [active, setActive] = useState<number | null>(null);
+  const W = 720;
+  const H = 240;
+  const PAD_X = 16;
+  const PAD_TOP = 28;
+  const PAD_BOTTOM = 34;
+  const innerW = W - PAD_X * 2;
+  const innerH = H - PAD_TOP - PAD_BOTTOM;
+  const max = Math.max(...data.map((d) => d.value)) * 1.15;
+
+  const points = data.map((d, i) => ({
+    x: PAD_X + (i / (data.length - 1)) * innerW,
+    y: PAD_TOP + innerH - (d.value / max) * innerH,
+  }));
+  const line = smoothPath(points);
+  const area = `${line} L ${points[points.length - 1]!.x} ${PAD_TOP + innerH} L ${points[0]!.x} ${PAD_TOP + innerH} Z`;
+  const gridLines = [0.25, 0.5, 0.75, 1].map((f) => PAD_TOP + innerH - f * innerH);
+
+  return (
+    <div className="mt-8">
+      <div className="relative">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="w-full"
+          role="img"
+          aria-label="Total spend chart"
+          onMouseLeave={() => setActive(null)}
+        >
+          <defs>
+            <linearGradient id="spend-area" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.02" />
+            </linearGradient>
+            <linearGradient id="spend-line" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="var(--primary)" />
+              <stop offset="100%" stopColor="var(--accent-green, var(--primary))" />
+            </linearGradient>
+          </defs>
+
+          {gridLines.map((y) => (
+            <line
+              key={y}
+              x1={PAD_X}
+              x2={W - PAD_X}
+              y1={y}
+              y2={y}
+              stroke="var(--border)"
+              strokeDasharray="4 6"
+              strokeWidth="1"
+            />
+          ))}
+
+          <path d={area} fill="url(#spend-area)" />
+          <path
+            d={line}
+            fill="none"
+            stroke="url(#spend-line)"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+
+          {active !== null && points[active] ? (
+            <line
+              x1={points[active]!.x}
+              x2={points[active]!.x}
+              y1={PAD_TOP - 6}
+              y2={PAD_TOP + innerH}
+              stroke="var(--primary)"
+              strokeWidth="1.5"
+              strokeDasharray="3 4"
+              opacity="0.6"
+            />
+          ) : null}
+
+          {points.map((p, i) => (
+            <g key={data[i]!.label}>
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r="14"
+                fill="transparent"
+                onMouseEnter={() => setActive(i)}
+              />
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={active === i ? 6 : 4}
+                fill="var(--background)"
+                stroke="var(--primary)"
+                strokeWidth={active === i ? 3 : 2}
+                className="pointer-events-none transition-all"
+              />
+            </g>
+          ))}
+
+          {points.map((p, i) => (
+            <text
+              key={data[i]!.label}
+              x={Math.min(Math.max(p.x, 34), W - 34)}
+              y={H - 10}
+              textAnchor="middle"
+              className="fill-muted-foreground text-[11px]"
+            >
+              {data[i]!.label}
+            </text>
+          ))}
+        </svg>
+
+        {active !== null && points[active] ? (
+          <div
+            className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-xl border border-border bg-surface px-3 py-2 shadow-lg"
+            style={{
+              left: `${(points[active]!.x / W) * 100}%`,
+              top: `${(points[active]!.y / H) * 100}%`,
+            }}
+          >
+            <p className="text-[11px] font-medium text-muted-foreground">{data[active]!.label}</p>
+            <p className="font-display text-sm font-bold">{data[active]!.detail}</p>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 function StatsPage() {
   const [spendView, setSpendView] = useState<"week" | "day">("week");
   const spendData = spendView === "week" ? spendByWeek : spendByDay;
@@ -105,7 +248,7 @@ function StatsPage() {
             {k.label === "Total spend" ? (
               <Link
                 to="/stats/spending"
-                className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                className="mt-3 inline-flex items-center gap-1 border-t border-border pt-3 text-xs font-semibold text-primary hover:underline w-full"
               >
                 See where it went
                 <ArrowUpRight className="size-3.5" />
@@ -162,27 +305,7 @@ function StatsPage() {
               </Link>
             </div>
           </div>
-          <div className="mt-8 flex h-56 items-end gap-3">
-            {spendData.map((s) => (
-              <div
-                key={s.label}
-                className="group flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-3"
-              >
-                <div className="relative w-full">
-                  <div
-                    className="w-full rounded-t-xl gradient-brand transition-all group-hover:brightness-110"
-                    style={{ height: `${s.value}%` }}
-                    role="img"
-                    aria-label={`${s.label}: ${s.detail}`}
-                  />
-                  <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-xs font-semibold text-background opacity-0 transition-opacity group-hover:opacity-100">
-                    {s.detail}
-                  </span>
-                </div>
-                <span className="text-xs text-muted-foreground">{s.label}</span>
-              </div>
-            ))}
-          </div>
+          <SpendChart data={spendData} />
         </section>
 
         <section className="surface-card p-6">
