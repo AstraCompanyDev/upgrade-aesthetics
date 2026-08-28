@@ -4,6 +4,7 @@ import {
   Bell,
   Briefcase,
   ChartNoAxesColumn,
+  FileText,
   LayoutGrid,
   MessageSquare,
   Search,
