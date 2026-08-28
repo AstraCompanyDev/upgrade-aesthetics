@@ -178,3 +178,167 @@ export function contractTotals(week: SpendWeek) {
   const fixed = week.fixed.map((f) => ({ label: f.contract, hours: 0, amount: f.amount }));
   return [...hourly, ...fixed].sort((a, b) => b.amount - a.amount).slice(0, 5);
 }
+
+/* ---------- Time log detail (work diary) ---------- */
+
+import shotCode from "@/assets/shot-code.jpg";
+import shotAds from "@/assets/shot-ads.jpg";
+import shotDesign from "@/assets/shot-design.jpg";
+
+export type WorkSession = {
+  id: string;
+  dayIndex: number;
+  start: string;
+  end: string;
+  hours: number;
+  memo: string;
+  activity: string;
+  screenshot: string;
+  keystrokes: number;
+  clicks: number;
+};
+
+const contractMeta: Record<
+  string,
+  { screenshot: string; activity: string; memos: string[] }
+> = {
+  "dev-ops-raj": {
+    screenshot: shotCode,
+    activity: "Infra & deploys",
+    memos: [
+      "Fixing staging deploy pipeline",
+      "Reviewing container logs and alerts",
+      "Rotating secrets, patching CI runner",
+      "Cache layer tuning on API gateway",
+    ],
+  },
+  "expert-media-buyer": {
+    screenshot: shotAds,
+    activity: "Ad campaign setup",
+    memos: [
+      "Building new campaign structure",
+      "Creative testing + audience split",
+      "Daily budget pacing review",
+      "Reporting dashboard for week",
+    ],
+  },
+  "design-system": {
+    screenshot: shotDesign,
+    activity: "Design system",
+    memos: [
+      "Component audit and token cleanup",
+      "Building new table + toast variants",
+      "Documenting spacing scale",
+      "Design QA pass on dashboard",
+    ],
+  },
+};
+
+function fallbackMeta(contractId: string) {
+  return (
+    contractMeta[contractId] ?? {
+      screenshot: shotCode,
+      activity: "General work",
+      memos: ["Working on assigned tasks"],
+    }
+  );
+}
+
+function addMinutes(base: number, minutes: number) {
+  const total = base + minutes;
+  const h = Math.floor(total / 60) % 24;
+  const m = total % 60;
+  const suffix = h >= 12 ? "PM" : "AM";
+  const hour12 = h % 12 === 0 ? 12 : h % 12;
+  return `${hour12}:${String(m).padStart(2, "0")} ${suffix}`;
+}
+
+/** Deterministically splits each day's logged hours into work-diary sessions. */
+export function contractSessions(entry: HourlyEntry): WorkSession[] {
+  const meta = fallbackMeta(entry.contractId);
+  const sessions: WorkSession[] = [];
+  entry.days.forEach((hours, dayIndex) => {
+    if (!hours) return;
+    let remaining = Math.round(hours * 60);
+    let cursor = 9 * 60;
+    let block = 0;
+    while (remaining > 0) {
+      const length = Math.min(remaining, 150);
+      const memo = meta.memos[(dayIndex + block) % meta.memos.length]!;
+      sessions.push({
+        id: `${entry.contractId}-${dayIndex}-${block}`,
+        dayIndex,
+        start: addMinutes(cursor, 0),
+        end: addMinutes(cursor, length),
+        hours: length / 60,
+        memo,
+        activity: meta.activity,
+        screenshot: meta.screenshot,
+        keystrokes: 400 + ((length * 13 + dayIndex * 37) % 900),
+        clicks: 60 + ((length * 7 + block * 19) % 240),
+      });
+      cursor += length + 30;
+      remaining -= length;
+      block += 1;
+    }
+  });
+  return sessions;
+}
+
+export function findHourly(contractId: string) {
+  for (const week of spendWeeks) {
+    const entry = week.hourly.find((h) => h.contractId === contractId);
+    if (entry) return { week, entry };
+  }
+  return null;
+}
+
+export function hourlyWeeksFor(contractId: string) {
+  return spendWeeks
+    .map((week) => ({ week, entry: week.hourly.find((h) => h.contractId === contractId) }))
+    .filter((r): r is { week: SpendWeek; entry: HourlyEntry } => Boolean(r.entry));
+}
+
+/* ---------- Fixed price payment detail ---------- */
+
+export type PaymentEvent = { label: string; date: string; note: string; done: boolean };
+
+export function findFixed(paymentId: string) {
+  for (const week of spendWeeks) {
+    const payment = week.fixed.find((f) => f.id === paymentId);
+    if (payment) return { week, payment };
+  }
+  return null;
+}
+
+export function paymentTimeline(payment: FixedEntry): PaymentEvent[] {
+  const released = payment.status === "Released";
+  return [
+    {
+      label: "Milestone funded",
+      date: payment.date,
+      note: `${money(payment.amount)} moved into escrow`,
+      done: true,
+    },
+    {
+      label: "Work submitted",
+      date: payment.date,
+      note: `${payment.freelancer} submitted the deliverables for review`,
+      done: payment.status !== "Pending approval",
+    },
+    {
+      label: "Client approval",
+      date: released ? payment.date : "Awaiting",
+      note: released ? "You approved the submitted work" : "Review the submission to release funds",
+      done: released,
+    },
+    {
+      label: "Payment released",
+      date: released ? payment.date : "Pending",
+      note: released
+        ? `${money(payment.amount)} paid to ${payment.freelancer}`
+        : `${money(payment.amount)} still held in escrow`,
+      done: released,
+    },
+  ];
+}
