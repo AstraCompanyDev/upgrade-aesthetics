@@ -10,6 +10,7 @@ import {
   MessageSquare,
   ArrowLeftRight,
   UserRound,
+  Timer,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
