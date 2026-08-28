@@ -1,3 +1,7 @@
+import shotCode from "@/assets/shot-code.jpg";
+import shotAds from "@/assets/shot-ads.jpg";
+import shotDesign from "@/assets/shot-design.jpg";
+
 export type HourlyEntry = {
   contractId: string;
   contract: string;
@@ -180,10 +184,6 @@ export function contractTotals(week: SpendWeek) {
 }
 
 /* ---------- Time log detail (work diary) ---------- */
-
-import shotCode from "@/assets/shot-code.jpg";
-import shotAds from "@/assets/shot-ads.jpg";
-import shotDesign from "@/assets/shot-design.jpg";
 
 export type WorkSession = {
   id: string;
