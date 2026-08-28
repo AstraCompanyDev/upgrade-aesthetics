@@ -17,7 +17,7 @@ import {
   weekTotals,
 } from "@/data/spending";
 
-export const Route = createFileRoute("/stats/spending")({
+export const Route = createFileRoute("/stats/spending/")({
   head: () => ({
     meta: [
       { title: "Spend Details — ZeeWork Client Analytics" },
@@ -250,17 +250,23 @@ function SpendDetailsPage() {
                   return (
                     <tr key={c.contractId} className="transition-colors hover:bg-muted/50">
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
+                        <Link
+                          to="/stats/spending/contract/$contractId"
+                          params={{ contractId: c.contractId }}
+                          className="group flex items-center gap-3"
+                        >
                           <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary-soft font-display text-xs font-bold text-accent-foreground">
                             {c.initials}
                           </span>
                           <div className="min-w-0">
-                            <p className="truncate font-medium">
+                            <p className="truncate font-medium group-hover:text-primary group-hover:underline">
                               {c.contract} — ${c.rate}/hr
                             </p>
-                            <p className="text-xs text-muted-foreground">{c.freelancer}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {c.freelancer} · View time log
+                            </p>
                           </div>
-                        </div>
+                        </Link>
                       </td>
                       {c.days.map((d, i) => (
                         <td
@@ -318,30 +324,36 @@ function SpendDetailsPage() {
         {week.fixed.length ? (
           <ul className="divide-y divide-border">
             {week.fixed.map((f) => (
-              <li
-                key={f.id}
-                className="flex flex-wrap items-center gap-4 px-6 py-4 transition-colors hover:bg-muted/50"
-              >
-                <span className="flex size-10 items-center justify-center rounded-full bg-primary-soft font-display text-sm font-bold text-accent-foreground">
-                  {f.initials}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium">{f.contract}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {f.milestone} · {f.freelancer} · {f.date}
-                  </p>
-                </div>
-                <span
-                  className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${
-                    f.status === "Released"
-                      ? "bg-primary-soft text-accent-foreground"
-                      : "bg-muted text-muted-foreground"
-                  }`}
+              <li key={f.id}>
+                <Link
+                  to="/stats/spending/payment/$paymentId"
+                  params={{ paymentId: f.id }}
+                  className="group flex flex-wrap items-center gap-4 px-6 py-4 transition-colors hover:bg-muted/50"
                 >
-                  {f.status === "Released" ? <ShieldCheck className="size-3.5" /> : null}
-                  {f.status}
-                </span>
-                <span className="font-semibold tabular-nums">{money(f.amount)}</span>
+                  <span className="flex size-10 items-center justify-center rounded-full bg-primary-soft font-display text-sm font-bold text-accent-foreground">
+                    {f.initials}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium group-hover:text-primary group-hover:underline">
+                      {f.contract}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {f.milestone} · {f.freelancer} · {f.date}
+                    </p>
+                  </div>
+                  <span
+                    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${
+                      f.status === "Released"
+                        ? "bg-primary-soft text-accent-foreground"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {f.status === "Released" ? <ShieldCheck className="size-3.5" /> : null}
+                    {f.status}
+                  </span>
+                  <span className="font-semibold tabular-nums">{money(f.amount)}</span>
+                  <ChevronRight className="size-4 text-muted-foreground" />
+                </Link>
               </li>
             ))}
           </ul>
