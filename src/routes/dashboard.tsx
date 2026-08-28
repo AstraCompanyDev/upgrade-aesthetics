@@ -248,7 +248,7 @@ function Dashboard() {
                 <div>
                   <h2 className="text-lg font-semibold">Your team</h2>
                   <p className="text-xs text-muted-foreground">
-                    People you&apos;ve worked with — rehire in one click
+                    Active freelancers working on your contracts
                   </p>
                 </div>
                 <Link
