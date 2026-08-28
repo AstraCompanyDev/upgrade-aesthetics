@@ -299,19 +299,16 @@ function Dashboard() {
                       </div>
                     </div>
 
-                    <p className="mt-4 text-xs text-muted-foreground">Last contract together</p>
-                    <p className="mt-0.5 line-clamp-2 text-sm font-medium">{m.lastContract}</p>
+                    <p className="mt-4 text-xs text-muted-foreground">Current contract</p>
+                    <p className="mt-0.5 line-clamp-2 text-sm font-medium">{m.currentContract}</p>
 
                     <div className="mt-auto flex gap-2 pt-5">
-                      <button className="flex-1 rounded-full border border-primary py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary-soft">
-                        Rehire
-                      </button>
                       <Link
                         to="/messages"
-                        aria-label={`Message ${m.name}`}
-                        className="flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                        className="flex flex-1 items-center justify-center gap-2 rounded-full border border-primary py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary-soft"
                       >
                         <Send className="size-4" />
+                        Message
                       </Link>
                     </div>
                   </article>
