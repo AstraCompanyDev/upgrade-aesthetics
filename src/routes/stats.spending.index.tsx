@@ -250,17 +250,23 @@ function SpendDetailsPage() {
                   return (
                     <tr key={c.contractId} className="transition-colors hover:bg-muted/50">
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
+                        <Link
+                          to="/stats/spending/contract/$contractId"
+                          params={{ contractId: c.contractId }}
+                          className="group flex items-center gap-3"
+                        >
                           <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary-soft font-display text-xs font-bold text-accent-foreground">
                             {c.initials}
                           </span>
                           <div className="min-w-0">
-                            <p className="truncate font-medium">
+                            <p className="truncate font-medium group-hover:text-primary group-hover:underline">
                               {c.contract} — ${c.rate}/hr
                             </p>
-                            <p className="text-xs text-muted-foreground">{c.freelancer}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {c.freelancer} · View time log
+                            </p>
                           </div>
-                        </div>
+                        </Link>
                       </td>
                       {c.days.map((d, i) => (
                         <td

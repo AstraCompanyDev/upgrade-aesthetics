@@ -38,6 +38,8 @@ import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.short
 import { Route as JobJobIdEditRouteImport } from './routes/job.$jobId.edit'
 import { Route as JobJobIdApplicantsRouteImport } from './routes/job.$jobId.applicants'
 import { Route as FreelancerFindWorkJobIdIndexRouteImport } from './routes/freelancer.find-work.$jobId.index'
+import { Route as StatsSpendingPaymentPaymentIdRouteImport } from './routes/stats.spending.payment.$paymentId'
+import { Route as StatsSpendingContractContractIdRouteImport } from './routes/stats.spending.contract.$contractId'
 import { Route as FreelancerFindWorkJobIdApplyRouteImport } from './routes/freelancer.find-work.$jobId.apply'
 import { Route as JobJobIdApplicantsApplicantIdMessageRouteImport } from './routes/job.$jobId.applicants.$applicantId.message'
 
@@ -187,6 +189,18 @@ const FreelancerFindWorkJobIdIndexRoute =
     path: '/freelancer/find-work/$jobId/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const StatsSpendingPaymentPaymentIdRoute =
+  StatsSpendingPaymentPaymentIdRouteImport.update({
+    id: '/spending/payment/$paymentId',
+    path: '/spending/payment/$paymentId',
+    getParentRoute: () => StatsRoute,
+  } as any)
+const StatsSpendingContractContractIdRoute =
+  StatsSpendingContractContractIdRouteImport.update({
+    id: '/spending/contract/$contractId',
+    path: '/spending/contract/$contractId',
+    getParentRoute: () => StatsRoute,
+  } as any)
 const FreelancerFindWorkJobIdApplyRoute =
   FreelancerFindWorkJobIdApplyRouteImport.update({
     id: '/freelancer/find-work/$jobId/apply',
@@ -230,6 +244,8 @@ export interface FileRoutesByFullPath {
   '/freelancer/find-work/': typeof FreelancerFindWorkIndexRoute
   '/stats/spending/': typeof StatsSpendingIndexRoute
   '/freelancer/find-work/$jobId/apply': typeof FreelancerFindWorkJobIdApplyRoute
+  '/stats/spending/contract/$contractId': typeof StatsSpendingContractContractIdRoute
+  '/stats/spending/payment/$paymentId': typeof StatsSpendingPaymentPaymentIdRoute
   '/freelancer/find-work/$jobId/': typeof FreelancerFindWorkJobIdIndexRoute
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
@@ -262,6 +278,8 @@ export interface FileRoutesByTo {
   '/freelancer/find-work': typeof FreelancerFindWorkIndexRoute
   '/stats/spending': typeof StatsSpendingIndexRoute
   '/freelancer/find-work/$jobId/apply': typeof FreelancerFindWorkJobIdApplyRoute
+  '/stats/spending/contract/$contractId': typeof StatsSpendingContractContractIdRoute
+  '/stats/spending/payment/$paymentId': typeof StatsSpendingPaymentPaymentIdRoute
   '/freelancer/find-work/$jobId': typeof FreelancerFindWorkJobIdIndexRoute
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
@@ -296,6 +314,8 @@ export interface FileRoutesById {
   '/freelancer/find-work/': typeof FreelancerFindWorkIndexRoute
   '/stats/spending/': typeof StatsSpendingIndexRoute
   '/freelancer/find-work/$jobId/apply': typeof FreelancerFindWorkJobIdApplyRoute
+  '/stats/spending/contract/$contractId': typeof StatsSpendingContractContractIdRoute
+  '/stats/spending/payment/$paymentId': typeof StatsSpendingPaymentPaymentIdRoute
   '/freelancer/find-work/$jobId/': typeof FreelancerFindWorkJobIdIndexRoute
   '/job/$jobId/applicants/$applicantId/message': typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
@@ -331,6 +351,8 @@ export interface FileRouteTypes {
     | '/freelancer/find-work/'
     | '/stats/spending/'
     | '/freelancer/find-work/$jobId/apply'
+    | '/stats/spending/contract/$contractId'
+    | '/stats/spending/payment/$paymentId'
     | '/freelancer/find-work/$jobId/'
     | '/job/$jobId/applicants/$applicantId/message'
   fileRoutesByTo: FileRoutesByTo
@@ -363,6 +385,8 @@ export interface FileRouteTypes {
     | '/freelancer/find-work'
     | '/stats/spending'
     | '/freelancer/find-work/$jobId/apply'
+    | '/stats/spending/contract/$contractId'
+    | '/stats/spending/payment/$paymentId'
     | '/freelancer/find-work/$jobId'
     | '/job/$jobId/applicants/$applicantId/message'
   id:
@@ -396,6 +420,8 @@ export interface FileRouteTypes {
     | '/freelancer/find-work/'
     | '/stats/spending/'
     | '/freelancer/find-work/$jobId/apply'
+    | '/stats/spending/contract/$contractId'
+    | '/stats/spending/payment/$paymentId'
     | '/freelancer/find-work/$jobId/'
     | '/job/$jobId/applicants/$applicantId/message'
   fileRoutesById: FileRoutesById
@@ -636,6 +662,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerFindWorkJobIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stats/spending/payment/$paymentId': {
+      id: '/stats/spending/payment/$paymentId'
+      path: '/spending/payment/$paymentId'
+      fullPath: '/stats/spending/payment/$paymentId'
+      preLoaderRoute: typeof StatsSpendingPaymentPaymentIdRouteImport
+      parentRoute: typeof StatsRoute
+    }
+    '/stats/spending/contract/$contractId': {
+      id: '/stats/spending/contract/$contractId'
+      path: '/spending/contract/$contractId'
+      fullPath: '/stats/spending/contract/$contractId'
+      preLoaderRoute: typeof StatsSpendingContractContractIdRouteImport
+      parentRoute: typeof StatsRoute
+    }
     '/freelancer/find-work/$jobId/apply': {
       id: '/freelancer/find-work/$jobId/apply'
       path: '/freelancer/find-work/$jobId/apply'
@@ -656,11 +696,15 @@ declare module '@tanstack/react-router' {
 interface StatsRouteChildren {
   StatsIndexRoute: typeof StatsIndexRoute
   StatsSpendingIndexRoute: typeof StatsSpendingIndexRoute
+  StatsSpendingContractContractIdRoute: typeof StatsSpendingContractContractIdRoute
+  StatsSpendingPaymentPaymentIdRoute: typeof StatsSpendingPaymentPaymentIdRoute
 }
 
 const StatsRouteChildren: StatsRouteChildren = {
   StatsIndexRoute: StatsIndexRoute,
   StatsSpendingIndexRoute: StatsSpendingIndexRoute,
+  StatsSpendingContractContractIdRoute: StatsSpendingContractContractIdRoute,
+  StatsSpendingPaymentPaymentIdRoute: StatsSpendingPaymentPaymentIdRoute,
 }
 
 const StatsRouteWithChildren = StatsRoute._addFileChildren(StatsRouteChildren)
