@@ -17,7 +17,7 @@ import {
   weekTotals,
 } from "@/data/spending";
 
-export const Route = createFileRoute("/stats/spending")({
+export const Route = createFileRoute("/stats/spending/")({
   head: () => ({
     meta: [
       { title: "Spend Details — ZeeWork Client Analytics" },
