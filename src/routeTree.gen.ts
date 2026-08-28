@@ -25,6 +25,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StatsIndexRouteImport } from './routes/stats.index'
 import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
+import { Route as StatsSpendingRouteImport } from './routes/stats.spending'
 import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
 import { Route as OnboardingBusinessRouteImport } from './routes/onboarding.business'
 import { Route as FreelancerSettingsRouteImport } from './routes/freelancer.settings'
@@ -119,6 +120,11 @@ const FreelancerIndexRoute = FreelancerIndexRouteImport.update({
   id: '/freelancer/',
   path: '/freelancer/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const StatsSpendingRoute = StatsSpendingRouteImport.update({
+  id: '/spending',
+  path: '/spending',
+  getParentRoute: () => StatsRoute,
 } as any)
 const SettingsProfileRoute = SettingsProfileRouteImport.update({
   id: '/settings/profile',
@@ -216,6 +222,7 @@ export interface FileRoutesByFullPath {
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/stats/spending': typeof StatsSpendingRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/stats/': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -247,6 +254,7 @@ export interface FileRoutesByTo {
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/stats/spending': typeof StatsSpendingRoute
   '/freelancer': typeof FreelancerIndexRoute
   '/stats': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -280,6 +288,7 @@ export interface FileRoutesById {
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/stats/spending': typeof StatsSpendingRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/stats/': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -314,6 +323,7 @@ export interface FileRouteTypes {
     | '/freelancer/settings'
     | '/onboarding/business'
     | '/settings/profile'
+    | '/stats/spending'
     | '/freelancer/'
     | '/stats/'
     | '/job/$jobId/applicants'
@@ -345,6 +355,7 @@ export interface FileRouteTypes {
     | '/freelancer/settings'
     | '/onboarding/business'
     | '/settings/profile'
+    | '/stats/spending'
     | '/freelancer'
     | '/stats'
     | '/job/$jobId/applicants'
@@ -377,6 +388,7 @@ export interface FileRouteTypes {
     | '/freelancer/settings'
     | '/onboarding/business'
     | '/settings/profile'
+    | '/stats/spending'
     | '/freelancer/'
     | '/stats/'
     | '/job/$jobId/applicants'
@@ -533,6 +545,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stats/spending': {
+      id: '/stats/spending'
+      path: '/spending'
+      fullPath: '/stats/spending'
+      preLoaderRoute: typeof StatsSpendingRouteImport
+      parentRoute: typeof StatsRoute
+    }
     '/settings/profile': {
       id: '/settings/profile'
       path: '/settings/profile'
@@ -635,10 +654,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface StatsRouteChildren {
+  StatsSpendingRoute: typeof StatsSpendingRoute
   StatsIndexRoute: typeof StatsIndexRoute
 }
 
 const StatsRouteChildren: StatsRouteChildren = {
+  StatsSpendingRoute: StatsSpendingRoute,
   StatsIndexRoute: StatsIndexRoute,
 }
 
