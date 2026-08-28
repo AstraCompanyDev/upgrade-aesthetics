@@ -49,10 +49,48 @@ const stats = [
 ];
 
 const team = [
-  { name: "Clarisse K.", role: "Executive Role", initials: "CK", verified: false },
-  { name: "Sean W.", role: "Administration Work", initials: "SW", verified: true },
-  { name: "Usama I.", role: "Job for Usama", initials: "UI", verified: true },
+  {
+    name: "Amanuel M.",
+    country: "Ethiopia",
+    initials: "AM",
+    success: "100%",
+    jobs: 5,
+    rate: "$15/hr",
+    lastContract: "Social media graphics — $5p/h",
+    verified: true,
+  },
+  {
+    name: "Timofiy R.",
+    country: "Ukraine",
+    initials: "TR",
+    success: "90%",
+    jobs: 27,
+    rate: "$40/hr",
+    lastContract: "Figma Designer — $350",
+    verified: true,
+  },
+  {
+    name: "Oleg K.",
+    country: "Israel",
+    initials: "OK",
+    success: "100%",
+    jobs: 4,
+    rate: "$112/hr",
+    lastContract: "Startup Business Advisors — $100p/h",
+    verified: false,
+  },
+  {
+    name: "Sylvester D.",
+    country: "Philippines",
+    initials: "SD",
+    success: "95%",
+    jobs: 2,
+    rate: "$8/hr",
+    lastContract: "Anime artist — $6p/h",
+    verified: false,
+  },
 ];
+
 
 const offers = [
   {
