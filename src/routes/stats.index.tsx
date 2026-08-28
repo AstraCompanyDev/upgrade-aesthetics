@@ -30,13 +30,25 @@ const kpis = [
   { label: "Proposal accept rate", value: "38%", delta: "+4.1%", up: true },
 ];
 
-const spend = [
-  { month: "Feb", value: 42 },
-  { month: "Mar", value: 58 },
-  { month: "Apr", value: 35 },
-  { month: "May", value: 72 },
-  { month: "Jun", value: 64 },
-  { month: "Jul", value: 88 },
+type SpendPoint = { label: string; value: number; detail: string };
+
+const spendByWeek: SpendPoint[] = [
+  { label: "Week 1", value: 42, detail: "$2,840" },
+  { label: "Week 2", value: 58, detail: "$3,920" },
+  { label: "Week 3", value: 35, detail: "$2,365" },
+  { label: "Week 4", value: 72, detail: "$4,865" },
+  { label: "Week 5", value: 64, detail: "$4,325" },
+  { label: "Week 6", value: 88, detail: "$5,950" },
+];
+
+const spendByDay: SpendPoint[] = [
+  { label: "Mon", value: 38, detail: "$1,520" },
+  { label: "Tue", value: 55, detail: "$2,200" },
+  { label: "Wed", value: 48, detail: "$1,920" },
+  { label: "Thu", value: 72, detail: "$2,880" },
+  { label: "Fri", value: 64, detail: "$2,560" },
+  { label: "Sat", value: 28, detail: "$1,120" },
+  { label: "Sun", value: 22, detail: "$880" },
 ];
 
 const categories = [
