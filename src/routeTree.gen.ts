@@ -27,6 +27,7 @@ import { Route as ContractsRouteImport } from './routes/contracts'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StatsIndexRouteImport } from './routes/stats.index'
 import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
+import { Route as AgencyIndexRouteImport } from './routes/agency.index'
 import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
 import { Route as OnboardingBusinessRouteImport } from './routes/onboarding.business'
 import { Route as FreelancerSettingsRouteImport } from './routes/freelancer.settings'
@@ -133,6 +134,11 @@ const StatsIndexRoute = StatsIndexRouteImport.update({
 const FreelancerIndexRoute = FreelancerIndexRouteImport.update({
   id: '/freelancer/',
   path: '/freelancer/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgencyIndexRoute = AgencyIndexRouteImport.update({
+  id: '/agency/',
+  path: '/agency/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsProfileRoute = SettingsProfileRouteImport.update({
@@ -250,6 +256,7 @@ export interface FileRoutesByFullPath {
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/agency/': typeof AgencyIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/stats/': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -286,6 +293,7 @@ export interface FileRoutesByTo {
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/agency': typeof AgencyIndexRoute
   '/freelancer': typeof FreelancerIndexRoute
   '/stats': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -324,6 +332,7 @@ export interface FileRoutesById {
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/agency/': typeof AgencyIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/stats/': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -363,6 +372,7 @@ export interface FileRouteTypes {
     | '/freelancer/settings'
     | '/onboarding/business'
     | '/settings/profile'
+    | '/agency/'
     | '/freelancer/'
     | '/stats/'
     | '/job/$jobId/applicants'
@@ -399,6 +409,7 @@ export interface FileRouteTypes {
     | '/freelancer/settings'
     | '/onboarding/business'
     | '/settings/profile'
+    | '/agency'
     | '/freelancer'
     | '/stats'
     | '/job/$jobId/applicants'
@@ -436,6 +447,7 @@ export interface FileRouteTypes {
     | '/freelancer/settings'
     | '/onboarding/business'
     | '/settings/profile'
+    | '/agency/'
     | '/freelancer/'
     | '/stats/'
     | '/job/$jobId/applicants'
@@ -474,6 +486,7 @@ export interface RootRouteChildren {
   FreelancerSettingsRoute: typeof FreelancerSettingsRoute
   OnboardingBusinessRoute: typeof OnboardingBusinessRoute
   SettingsProfileRoute: typeof SettingsProfileRoute
+  AgencyIndexRoute: typeof AgencyIndexRoute
   FreelancerIndexRoute: typeof FreelancerIndexRoute
   JobJobIdApplicantsRoute: typeof JobJobIdApplicantsRouteWithChildren
   JobJobIdEditRoute: typeof JobJobIdEditRoute
@@ -609,6 +622,13 @@ declare module '@tanstack/react-router' {
       path: '/freelancer'
       fullPath: '/freelancer/'
       preLoaderRoute: typeof FreelancerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agency/': {
+      id: '/agency/'
+      path: '/agency'
+      fullPath: '/agency/'
+      preLoaderRoute: typeof AgencyIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings/profile': {
@@ -785,6 +805,7 @@ const rootRouteChildren: RootRouteChildren = {
   FreelancerSettingsRoute: FreelancerSettingsRoute,
   OnboardingBusinessRoute: OnboardingBusinessRoute,
   SettingsProfileRoute: SettingsProfileRoute,
+  AgencyIndexRoute: AgencyIndexRoute,
   FreelancerIndexRoute: FreelancerIndexRoute,
   JobJobIdApplicantsRoute: JobJobIdApplicantsRouteWithChildren,
   JobJobIdEditRoute: JobJobIdEditRoute,
