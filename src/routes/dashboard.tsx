@@ -13,6 +13,8 @@ import {
   UserPlus,
 } from "lucide-react";
 import { DashboardShell } from "@/components/dashboard-shell";
+import { activeContracts, contractStatusStyles } from "@/data/contracts";
+import { money } from "@/data/spending";
 import heroDocs from "@/assets/hero-docs.jpg";
 import gigFrontend from "@/assets/gig-frontend.jpg";
 import gigCloud from "@/assets/gig-cloud.jpg";
