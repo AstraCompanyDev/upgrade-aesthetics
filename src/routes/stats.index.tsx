@@ -162,27 +162,7 @@ function StatsPage() {
               </Link>
             </div>
           </div>
-          <div className="mt-8 flex h-56 items-end gap-3">
-            {spendData.map((s) => (
-              <div
-                key={s.label}
-                className="group flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-3"
-              >
-                <div className="relative w-full">
-                  <div
-                    className="w-full rounded-t-xl gradient-brand transition-all group-hover:brightness-110"
-                    style={{ height: `${s.value}%` }}
-                    role="img"
-                    aria-label={`${s.label}: ${s.detail}`}
-                  />
-                  <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-xs font-semibold text-background opacity-0 transition-opacity group-hover:opacity-100">
-                    {s.detail}
-                  </span>
-                </div>
-                <span className="text-xs text-muted-foreground">{s.label}</span>
-              </div>
-            ))}
-          </div>
+          <SpendChart data={spendData} />
         </section>
 
         <section className="surface-card p-6">
