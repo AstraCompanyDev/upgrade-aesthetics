@@ -276,16 +276,28 @@ function TimerPage() {
           <div className="flex flex-col gap-6 md:flex-row md:items-center">
             <h2 className="font-display text-3xl font-semibold md:w-64">Also available for</h2>
             <div className="grid flex-1 gap-3 sm:grid-cols-3">
-              {platforms.map(({ label, note, icon: Icon }) => (
+              {platforms.map(({ key, label, note, icon: Icon }) => (
                 <button
                   key={label}
-                  className="surface-card hover-lift flex items-center gap-3 p-5 text-left"
+                  onClick={() => {
+                    setSelected(key);
+                    setVersion(0);
+                  }}
+                  aria-pressed={selected === key}
+                  className={`surface-card hover-lift flex items-center gap-3 p-5 text-left transition-shadow ${
+                    selected === key ? "ring-2 ring-primary" : ""
+                  }`}
                 >
                   <Icon className="size-5 text-primary" />
-                  <span>
+                  <span className="flex-1">
                     <span className="block text-sm font-semibold">{label}</span>
                     <span className="block text-xs text-muted-foreground">{note}</span>
                   </span>
+                  {selected === key ? (
+                    <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
+                      Selected
+                    </span>
+                  ) : null}
                 </button>
               ))}
             </div>
