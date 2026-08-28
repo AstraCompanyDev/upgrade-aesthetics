@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
+  ArrowRight,
   ArrowUpRight,
   BadgeCheck,
   CreditCard,
@@ -12,6 +13,8 @@ import {
   UserPlus,
 } from "lucide-react";
 import { DashboardShell } from "@/components/dashboard-shell";
+import { activeContracts, contractStatusStyles } from "@/data/contracts";
+import { money } from "@/data/spending";
 import heroDocs from "@/assets/hero-docs.jpg";
 import gigFrontend from "@/assets/gig-frontend.jpg";
 import gigCloud from "@/assets/gig-cloud.jpg";
@@ -145,6 +148,59 @@ function Dashboard() {
               <p className="mt-1 text-xs text-muted-foreground">{s.delta}</p>
             </div>
           ))}
+        </section>
+
+        <section className="mt-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Active contracts</h2>
+            <Link
+              to="/contracts"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+            >
+              View all contracts
+              <ArrowRight className="size-4" />
+            </Link>
+          </div>
+          <div className="mt-3 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {activeContracts.slice(0, 3).map((c) => (
+              <Link
+                key={`${c.kind}-${c.id}`}
+                to={
+                  c.kind === "hourly"
+                    ? "/stats/spending/contract/$contractId"
+                    : "/stats/spending/payment/$paymentId"
+                }
+                params={
+                  c.kind === "hourly"
+                    ? { contractId: c.id }
+                    : ({ paymentId: c.id } as never)
+                }
+                className="surface-card hover-lift p-5"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="flex size-10 items-center justify-center rounded-full gradient-brand text-xs font-semibold text-primary-foreground">
+                    {c.initials}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold">{c.title}</p>
+                    <p className="truncate text-xs text-muted-foreground">
+                      {c.freelancer} · {c.rateLabel}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4 flex items-center justify-between">
+                  <span
+                    className={`rounded-full px-2.5 py-1 text-xs font-medium ${contractStatusStyles[c.status]}`}
+                  >
+                    {c.status}
+                  </span>
+                  <span className="font-display text-sm font-bold tabular-nums">
+                    {money(c.spentToDate)}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </section>
 
         <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
