@@ -180,7 +180,7 @@ function SpendChart({ data }: { data: SpendPoint[] }) {
           {points.map((p, i) => (
             <text
               key={data[i]!.label}
-              x={p.x}
+              x={Math.min(Math.max(p.x, 34), W - 34)}
               y={H - 10}
               textAnchor="middle"
               className="fill-muted-foreground text-[11px]"
@@ -248,7 +248,7 @@ function StatsPage() {
             {k.label === "Total spend" ? (
               <Link
                 to="/stats/spending"
-                className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                className="mt-3 inline-flex items-center gap-1 border-t border-border pt-3 text-xs font-semibold text-primary hover:underline w-full"
               >
                 See where it went
                 <ArrowUpRight className="size-3.5" />
