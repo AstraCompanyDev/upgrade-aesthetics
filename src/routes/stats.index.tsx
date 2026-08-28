@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDownRight, ArrowUpRight, Download } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Download, CalendarDays, TrendingUp } from "lucide-react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/stats/")({
   head: () => ({
