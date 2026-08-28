@@ -27,19 +27,13 @@ import { Route as ContractsRouteImport } from './routes/contracts'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StatsIndexRouteImport } from './routes/stats.index'
 import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
-import { Route as AgencyIndexRouteImport } from './routes/agency.index'
 import { Route as SettingsProfileRouteImport } from './routes/settings.profile'
 import { Route as OnboardingBusinessRouteImport } from './routes/onboarding.business'
 import { Route as FreelancerSettingsRouteImport } from './routes/freelancer.settings'
 import { Route as FreelancerProposalsRouteImport } from './routes/freelancer.proposals'
 import { Route as FreelancerProfileRouteImport } from './routes/freelancer.profile'
 import { Route as FreelancerEarningsRouteImport } from './routes/freelancer.earnings'
-import { Route as AgencyTeamRouteImport } from './routes/agency.team'
-import { Route as AgencyProposalsRouteImport } from './routes/agency.proposals'
 import { Route as AgencyProfileRouteImport } from './routes/agency.profile'
-import { Route as AgencyFindWorkRouteImport } from './routes/agency.find-work'
-import { Route as AgencyEarningsRouteImport } from './routes/agency.earnings'
-import { Route as AgencyContractsRouteImport } from './routes/agency.contracts'
 import { Route as StatsSpendingIndexRouteImport } from './routes/stats.spending.index'
 import { Route as FreelancerFindWorkIndexRouteImport } from './routes/freelancer.find-work.index'
 import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.shortlist'
@@ -141,11 +135,6 @@ const FreelancerIndexRoute = FreelancerIndexRouteImport.update({
   path: '/freelancer/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AgencyIndexRoute = AgencyIndexRouteImport.update({
-  id: '/agency/',
-  path: '/agency/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SettingsProfileRoute = SettingsProfileRouteImport.update({
   id: '/settings/profile',
   path: '/settings/profile',
@@ -176,34 +165,9 @@ const FreelancerEarningsRoute = FreelancerEarningsRouteImport.update({
   path: '/freelancer/earnings',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AgencyTeamRoute = AgencyTeamRouteImport.update({
-  id: '/agency/team',
-  path: '/agency/team',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgencyProposalsRoute = AgencyProposalsRouteImport.update({
-  id: '/agency/proposals',
-  path: '/agency/proposals',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AgencyProfileRoute = AgencyProfileRouteImport.update({
   id: '/agency/profile',
   path: '/agency/profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgencyFindWorkRoute = AgencyFindWorkRouteImport.update({
-  id: '/agency/find-work',
-  path: '/agency/find-work',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgencyEarningsRoute = AgencyEarningsRouteImport.update({
-  id: '/agency/earnings',
-  path: '/agency/earnings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgencyContractsRoute = AgencyContractsRouteImport.update({
-  id: '/agency/contracts',
-  path: '/agency/contracts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StatsSpendingIndexRoute = StatsSpendingIndexRouteImport.update({
@@ -279,19 +243,13 @@ export interface FileRoutesByFullPath {
   '/talent': typeof TalentRoute
   '/timer': typeof TimerRoute
   '/verify-email': typeof VerifyEmailRoute
-  '/agency/contracts': typeof AgencyContractsRoute
-  '/agency/earnings': typeof AgencyEarningsRoute
-  '/agency/find-work': typeof AgencyFindWorkRoute
   '/agency/profile': typeof AgencyProfileRoute
-  '/agency/proposals': typeof AgencyProposalsRoute
-  '/agency/team': typeof AgencyTeamRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
-  '/agency/': typeof AgencyIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/stats/': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -321,19 +279,13 @@ export interface FileRoutesByTo {
   '/talent': typeof TalentRoute
   '/timer': typeof TimerRoute
   '/verify-email': typeof VerifyEmailRoute
-  '/agency/contracts': typeof AgencyContractsRoute
-  '/agency/earnings': typeof AgencyEarningsRoute
-  '/agency/find-work': typeof AgencyFindWorkRoute
   '/agency/profile': typeof AgencyProfileRoute
-  '/agency/proposals': typeof AgencyProposalsRoute
-  '/agency/team': typeof AgencyTeamRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
-  '/agency': typeof AgencyIndexRoute
   '/freelancer': typeof FreelancerIndexRoute
   '/stats': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -365,19 +317,13 @@ export interface FileRoutesById {
   '/talent': typeof TalentRoute
   '/timer': typeof TimerRoute
   '/verify-email': typeof VerifyEmailRoute
-  '/agency/contracts': typeof AgencyContractsRoute
-  '/agency/earnings': typeof AgencyEarningsRoute
-  '/agency/find-work': typeof AgencyFindWorkRoute
   '/agency/profile': typeof AgencyProfileRoute
-  '/agency/proposals': typeof AgencyProposalsRoute
-  '/agency/team': typeof AgencyTeamRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
   '/onboarding/business': typeof OnboardingBusinessRoute
   '/settings/profile': typeof SettingsProfileRoute
-  '/agency/': typeof AgencyIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/stats/': typeof StatsIndexRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
@@ -410,19 +356,13 @@ export interface FileRouteTypes {
     | '/talent'
     | '/timer'
     | '/verify-email'
-    | '/agency/contracts'
-    | '/agency/earnings'
-    | '/agency/find-work'
     | '/agency/profile'
-    | '/agency/proposals'
-    | '/agency/team'
     | '/freelancer/earnings'
     | '/freelancer/profile'
     | '/freelancer/proposals'
     | '/freelancer/settings'
     | '/onboarding/business'
     | '/settings/profile'
-    | '/agency/'
     | '/freelancer/'
     | '/stats/'
     | '/job/$jobId/applicants'
@@ -452,19 +392,13 @@ export interface FileRouteTypes {
     | '/talent'
     | '/timer'
     | '/verify-email'
-    | '/agency/contracts'
-    | '/agency/earnings'
-    | '/agency/find-work'
     | '/agency/profile'
-    | '/agency/proposals'
-    | '/agency/team'
     | '/freelancer/earnings'
     | '/freelancer/profile'
     | '/freelancer/proposals'
     | '/freelancer/settings'
     | '/onboarding/business'
     | '/settings/profile'
-    | '/agency'
     | '/freelancer'
     | '/stats'
     | '/job/$jobId/applicants'
@@ -495,19 +429,13 @@ export interface FileRouteTypes {
     | '/talent'
     | '/timer'
     | '/verify-email'
-    | '/agency/contracts'
-    | '/agency/earnings'
-    | '/agency/find-work'
     | '/agency/profile'
-    | '/agency/proposals'
-    | '/agency/team'
     | '/freelancer/earnings'
     | '/freelancer/profile'
     | '/freelancer/proposals'
     | '/freelancer/settings'
     | '/onboarding/business'
     | '/settings/profile'
-    | '/agency/'
     | '/freelancer/'
     | '/stats/'
     | '/job/$jobId/applicants'
@@ -539,19 +467,13 @@ export interface RootRouteChildren {
   TalentRoute: typeof TalentRoute
   TimerRoute: typeof TimerRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
-  AgencyContractsRoute: typeof AgencyContractsRoute
-  AgencyEarningsRoute: typeof AgencyEarningsRoute
-  AgencyFindWorkRoute: typeof AgencyFindWorkRoute
   AgencyProfileRoute: typeof AgencyProfileRoute
-  AgencyProposalsRoute: typeof AgencyProposalsRoute
-  AgencyTeamRoute: typeof AgencyTeamRoute
   FreelancerEarningsRoute: typeof FreelancerEarningsRoute
   FreelancerProfileRoute: typeof FreelancerProfileRoute
   FreelancerProposalsRoute: typeof FreelancerProposalsRoute
   FreelancerSettingsRoute: typeof FreelancerSettingsRoute
   OnboardingBusinessRoute: typeof OnboardingBusinessRoute
   SettingsProfileRoute: typeof SettingsProfileRoute
-  AgencyIndexRoute: typeof AgencyIndexRoute
   FreelancerIndexRoute: typeof FreelancerIndexRoute
   JobJobIdApplicantsRoute: typeof JobJobIdApplicantsRouteWithChildren
   JobJobIdEditRoute: typeof JobJobIdEditRoute
@@ -689,13 +611,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/agency/': {
-      id: '/agency/'
-      path: '/agency'
-      fullPath: '/agency/'
-      preLoaderRoute: typeof AgencyIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/settings/profile': {
       id: '/settings/profile'
       path: '/settings/profile'
@@ -738,46 +653,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerEarningsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/agency/team': {
-      id: '/agency/team'
-      path: '/agency/team'
-      fullPath: '/agency/team'
-      preLoaderRoute: typeof AgencyTeamRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/agency/proposals': {
-      id: '/agency/proposals'
-      path: '/agency/proposals'
-      fullPath: '/agency/proposals'
-      preLoaderRoute: typeof AgencyProposalsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/agency/profile': {
       id: '/agency/profile'
       path: '/agency/profile'
       fullPath: '/agency/profile'
       preLoaderRoute: typeof AgencyProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/agency/find-work': {
-      id: '/agency/find-work'
-      path: '/agency/find-work'
-      fullPath: '/agency/find-work'
-      preLoaderRoute: typeof AgencyFindWorkRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/agency/earnings': {
-      id: '/agency/earnings'
-      path: '/agency/earnings'
-      fullPath: '/agency/earnings'
-      preLoaderRoute: typeof AgencyEarningsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/agency/contracts': {
-      id: '/agency/contracts'
-      path: '/agency/contracts'
-      fullPath: '/agency/contracts'
-      preLoaderRoute: typeof AgencyContractsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stats/spending/': {
@@ -898,19 +778,13 @@ const rootRouteChildren: RootRouteChildren = {
   TalentRoute: TalentRoute,
   TimerRoute: TimerRoute,
   VerifyEmailRoute: VerifyEmailRoute,
-  AgencyContractsRoute: AgencyContractsRoute,
-  AgencyEarningsRoute: AgencyEarningsRoute,
-  AgencyFindWorkRoute: AgencyFindWorkRoute,
   AgencyProfileRoute: AgencyProfileRoute,
-  AgencyProposalsRoute: AgencyProposalsRoute,
-  AgencyTeamRoute: AgencyTeamRoute,
   FreelancerEarningsRoute: FreelancerEarningsRoute,
   FreelancerProfileRoute: FreelancerProfileRoute,
   FreelancerProposalsRoute: FreelancerProposalsRoute,
   FreelancerSettingsRoute: FreelancerSettingsRoute,
   OnboardingBusinessRoute: OnboardingBusinessRoute,
   SettingsProfileRoute: SettingsProfileRoute,
-  AgencyIndexRoute: AgencyIndexRoute,
   FreelancerIndexRoute: FreelancerIndexRoute,
   JobJobIdApplicantsRoute: JobJobIdApplicantsRouteWithChildren,
   JobJobIdEditRoute: JobJobIdEditRoute,

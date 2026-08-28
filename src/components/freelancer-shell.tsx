@@ -21,7 +21,7 @@ const nav = [
   { label: "Earnings", icon: Wallet, to: "/freelancer/earnings" as const },
   { label: "ZeeWork Timer", icon: Timer, to: "/timer" as const },
   { label: "My profile", icon: UserRound, to: "/freelancer/profile" as const },
-  { label: "Agency dashboard", icon: Building2, to: "/agency" as const, exact: true },
+  { label: "Agency profile", icon: Building2, to: "/agency/profile" as const },
   { label: "Messages", icon: MessageSquare, to: "/messages" as const, badge: 2 },
 ];
 
@@ -84,15 +84,8 @@ export function FreelancerShell({ children }: { children: ReactNode }) {
           </div>
           <div className="ml-auto flex items-center gap-3">
             <Link
-              to="/agency"
-              className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground sm:flex"
-            >
-              <ArrowLeftRight className="size-3.5" />
-              Agency view
-            </Link>
-            <Link
               to="/dashboard"
-              className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground lg:flex"
+              className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground sm:flex"
             >
               <ArrowLeftRight className="size-3.5" />
               Client view

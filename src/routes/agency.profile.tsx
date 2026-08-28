@@ -16,7 +16,7 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
-import { AgencyShell } from "@/components/agency-shell";
+import { FreelancerShell } from "@/components/freelancer-shell";
 import banner from "@/assets/landing-trust.jpg";
 import member1 from "@/assets/face-1.jpg";
 import member2 from "@/assets/face-2.jpg";
@@ -129,7 +129,7 @@ function AgencyProfilePage() {
   const list = members[memberTab];
 
   return (
-    <AgencyShell>
+    <FreelancerShell>
       <div className="mx-auto max-w-[1180px] space-y-5">
         {/* Cover banner */}
         <section className="surface-card relative overflow-hidden">
@@ -430,6 +430,6 @@ function AgencyProfilePage() {
           </div>
         </section>
       </div>
-    </AgencyShell>
+    </FreelancerShell>
   );
 }
