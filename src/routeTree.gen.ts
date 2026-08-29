@@ -37,6 +37,7 @@ import { Route as FreelancerEarningsRouteImport } from './routes/freelancer.earn
 import { Route as AgencyProfileRouteImport } from './routes/agency.profile'
 import { Route as StatsSpendingIndexRouteImport } from './routes/stats.spending.index'
 import { Route as FreelancerFindWorkIndexRouteImport } from './routes/freelancer.find-work.index'
+import { Route as FreelancerEarningsIndexRouteImport } from './routes/freelancer.earnings.index'
 import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.shortlist'
 import { Route as JobJobIdEditRouteImport } from './routes/job.$jobId.edit'
 import { Route as JobJobIdApplicantsRouteImport } from './routes/job.$jobId.applicants'
@@ -186,6 +187,11 @@ const FreelancerFindWorkIndexRoute = FreelancerFindWorkIndexRouteImport.update({
   path: '/freelancer/find-work/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FreelancerEarningsIndexRoute = FreelancerEarningsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FreelancerEarningsRoute,
+} as any)
 const JobJobIdShortlistRoute = JobJobIdShortlistRouteImport.update({
   id: '/job/$jobId/shortlist',
   path: '/job/$jobId/shortlist',
@@ -250,7 +256,7 @@ export interface FileRoutesByFullPath {
   '/timer': typeof TimerRoute
   '/verify-email': typeof VerifyEmailRoute
   '/agency/profile': typeof AgencyProfileRoute
-  '/freelancer/earnings': typeof FreelancerEarningsRoute
+  '/freelancer/earnings': typeof FreelancerEarningsRouteWithChildren
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
@@ -262,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
+  '/freelancer/earnings/': typeof FreelancerEarningsIndexRoute
   '/freelancer/find-work/': typeof FreelancerFindWorkIndexRoute
   '/stats/spending/': typeof StatsSpendingIndexRoute
   '/freelancer/find-work/$jobId/apply': typeof FreelancerFindWorkJobIdApplyRoute
@@ -287,7 +294,6 @@ export interface FileRoutesByTo {
   '/timer': typeof TimerRoute
   '/verify-email': typeof VerifyEmailRoute
   '/agency/profile': typeof AgencyProfileRoute
-  '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
@@ -299,6 +305,7 @@ export interface FileRoutesByTo {
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
+  '/freelancer/earnings': typeof FreelancerEarningsIndexRoute
   '/freelancer/find-work': typeof FreelancerFindWorkIndexRoute
   '/stats/spending': typeof StatsSpendingIndexRoute
   '/freelancer/find-work/$jobId/apply': typeof FreelancerFindWorkJobIdApplyRoute
@@ -326,7 +333,7 @@ export interface FileRoutesById {
   '/timer': typeof TimerRoute
   '/verify-email': typeof VerifyEmailRoute
   '/agency/profile': typeof AgencyProfileRoute
-  '/freelancer/earnings': typeof FreelancerEarningsRoute
+  '/freelancer/earnings': typeof FreelancerEarningsRouteWithChildren
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/freelancer/proposals': typeof FreelancerProposalsRoute
   '/freelancer/settings': typeof FreelancerSettingsRoute
@@ -338,6 +345,7 @@ export interface FileRoutesById {
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
   '/job/$jobId/shortlist': typeof JobJobIdShortlistRoute
+  '/freelancer/earnings/': typeof FreelancerEarningsIndexRoute
   '/freelancer/find-work/': typeof FreelancerFindWorkIndexRoute
   '/stats/spending/': typeof StatsSpendingIndexRoute
   '/freelancer/find-work/$jobId/apply': typeof FreelancerFindWorkJobIdApplyRoute
@@ -378,6 +386,7 @@ export interface FileRouteTypes {
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
+    | '/freelancer/earnings/'
     | '/freelancer/find-work/'
     | '/stats/spending/'
     | '/freelancer/find-work/$jobId/apply'
@@ -403,7 +412,6 @@ export interface FileRouteTypes {
     | '/timer'
     | '/verify-email'
     | '/agency/profile'
-    | '/freelancer/earnings'
     | '/freelancer/profile'
     | '/freelancer/proposals'
     | '/freelancer/settings'
@@ -415,6 +423,7 @@ export interface FileRouteTypes {
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
+    | '/freelancer/earnings'
     | '/freelancer/find-work'
     | '/stats/spending'
     | '/freelancer/find-work/$jobId/apply'
@@ -453,6 +462,7 @@ export interface FileRouteTypes {
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
     | '/job/$jobId/shortlist'
+    | '/freelancer/earnings/'
     | '/freelancer/find-work/'
     | '/stats/spending/'
     | '/freelancer/find-work/$jobId/apply'
@@ -480,7 +490,7 @@ export interface RootRouteChildren {
   TimerRoute: typeof TimerRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
   AgencyProfileRoute: typeof AgencyProfileRoute
-  FreelancerEarningsRoute: typeof FreelancerEarningsRoute
+  FreelancerEarningsRoute: typeof FreelancerEarningsRouteWithChildren
   FreelancerProfileRoute: typeof FreelancerProfileRoute
   FreelancerProposalsRoute: typeof FreelancerProposalsRoute
   FreelancerSettingsRoute: typeof FreelancerSettingsRoute
@@ -694,6 +704,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerFindWorkIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/freelancer/earnings/': {
+      id: '/freelancer/earnings/'
+      path: '/'
+      fullPath: '/freelancer/earnings/'
+      preLoaderRoute: typeof FreelancerEarningsIndexRouteImport
+      parentRoute: typeof FreelancerEarningsRoute
+    }
     '/job/$jobId/shortlist': {
       id: '/job/$jobId/shortlist'
       path: '/job/$jobId/shortlist'
@@ -769,6 +786,17 @@ const StatsRouteChildren: StatsRouteChildren = {
 
 const StatsRouteWithChildren = StatsRoute._addFileChildren(StatsRouteChildren)
 
+interface FreelancerEarningsRouteChildren {
+  FreelancerEarningsIndexRoute: typeof FreelancerEarningsIndexRoute
+}
+
+const FreelancerEarningsRouteChildren: FreelancerEarningsRouteChildren = {
+  FreelancerEarningsIndexRoute: FreelancerEarningsIndexRoute,
+}
+
+const FreelancerEarningsRouteWithChildren =
+  FreelancerEarningsRoute._addFileChildren(FreelancerEarningsRouteChildren)
+
 interface JobJobIdApplicantsRouteChildren {
   JobJobIdApplicantsApplicantIdMessageRoute: typeof JobJobIdApplicantsApplicantIdMessageRoute
 }
@@ -799,7 +827,7 @@ const rootRouteChildren: RootRouteChildren = {
   TimerRoute: TimerRoute,
   VerifyEmailRoute: VerifyEmailRoute,
   AgencyProfileRoute: AgencyProfileRoute,
-  FreelancerEarningsRoute: FreelancerEarningsRoute,
+  FreelancerEarningsRoute: FreelancerEarningsRouteWithChildren,
   FreelancerProfileRoute: FreelancerProfileRoute,
   FreelancerProposalsRoute: FreelancerProposalsRoute,
   FreelancerSettingsRoute: FreelancerSettingsRoute,
