@@ -21,7 +21,7 @@ export const Route = createFileRoute("/freelancer/earnings/reports")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: ReportsPage;
+  component: ReportsPage,
 });
 
 const metrics = [
