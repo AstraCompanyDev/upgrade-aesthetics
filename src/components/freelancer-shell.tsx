@@ -1,6 +1,7 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Bell,
+  ChevronDown,
   LayoutGrid,
   Search,
   Settings,
@@ -12,23 +13,75 @@ import {
   UserRound,
   Timer,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
-const nav = [
+const navTop = [
   { label: "Dashboard", icon: LayoutGrid, to: "/freelancer" as const, exact: true },
   { label: "Find work", icon: Search, to: "/freelancer/find-work" as const },
   { label: "My proposals", icon: Briefcase, to: "/freelancer/proposals" as const },
-  { label: "Earnings", icon: Wallet, to: "/freelancer/earnings" as const },
+];
+
+const earningsChildren = [
+  { label: "Overview", to: "/freelancer/earnings" as const, exact: true },
+  { label: "Transactions", to: "/freelancer/earnings/transactions" as const },
+  { label: "My Reports", to: "/freelancer/earnings/reports" as const },
+];
+
+const navBottom = [
   { label: "ZeeWork Timer", icon: Timer, to: "/timer" as const },
   { label: "My profile", icon: UserRound, to: "/freelancer/profile" as const },
   { label: "Agency profile", icon: Building2, to: "/agency/profile" as const },
   { label: "Messages", icon: MessageSquare, to: "/messages" as const, badge: 2 },
 ];
 
+const itemClass =
+  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground data-[status=active]:bg-sidebar-accent data-[status=active]:font-medium data-[status=active]:text-sidebar-accent-foreground";
+
+function EarningsNav() {
+  const onEarnings = useRouterState({
+    select: (s) => s.location.pathname.startsWith("/freelancer/earnings"),
+  });
+  const [open, setOpen] = useState(onEarnings);
+  const expanded = open || onEarnings;
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen(!expanded)}
+        aria-expanded={expanded}
+        className={`w-full ${itemClass} ${
+          onEarnings ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground" : ""
+        }`}
+      >
+        <Wallet className="size-4" />
+        Earnings
+        <ChevronDown
+          className={`ml-auto size-4 transition-transform ${expanded ? "rotate-180" : ""}`}
+        />
+      </button>
+      {expanded ? (
+        <div className="mt-1 ml-6 flex flex-col gap-0.5 border-l border-sidebar-accent/60 pl-3">
+          {earningsChildren.map((child) => (
+            <Link
+              key={child.label}
+              to={child.to}
+              activeOptions={{ exact: Boolean(child.exact) }}
+              className="rounded-lg px-3 py-2 text-sm text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground data-[status=active]:bg-sidebar-accent/70 data-[status=active]:font-medium data-[status=active]:text-sidebar-accent-foreground"
+            >
+              {child.label}
+            </Link>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export function FreelancerShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen">
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-sidebar px-5 py-6 text-sidebar-foreground lg:flex">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col overflow-y-auto bg-sidebar px-5 py-6 text-sidebar-foreground lg:flex">
         <Link to="/freelancer" className="flex items-center px-2" aria-label="ZeeWork home">
           <img src="/zeework-logo-light.svg" alt="ZeeWork" className="h-7 w-auto" />
         </Link>
@@ -38,13 +91,17 @@ export function FreelancerShell({ children }: { children: ReactNode }) {
         </span>
 
         <nav className="mt-6 flex flex-col gap-1">
-          {nav.map(({ label, icon: Icon, to, exact, badge }) => (
-            <Link
-              key={label}
-              to={to}
-              activeOptions={{ exact: Boolean(exact) }}
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground data-[status=active]:bg-sidebar-accent data-[status=active]:font-medium data-[status=active]:text-sidebar-accent-foreground"
-            >
+          {navTop.map(({ label, icon: Icon, to, exact }) => (
+            <Link key={label} to={to} activeOptions={{ exact: Boolean(exact) }} className={itemClass}>
+              <Icon className="size-4" />
+              {label}
+            </Link>
+          ))}
+
+          <EarningsNav />
+
+          {navBottom.map(({ label, icon: Icon, to, badge }) => (
+            <Link key={label} to={to} className={itemClass}>
               <Icon className="size-4" />
               {label}
               {badge ? (
