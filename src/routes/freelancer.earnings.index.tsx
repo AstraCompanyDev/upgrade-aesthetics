@@ -180,10 +180,10 @@ function RowTable({ rows }: { rows: { date: string; contract: string; client: st
       <table className="w-full min-w-[640px] text-sm">
         <thead>
           <tr className="border-b border-border text-[11px] uppercase tracking-wide text-muted-foreground">
-            <th className="py-2 text-left font-semibold">Date</th>
-            <th className="py-2 text-left font-semibold">Contract</th>
-            <th className="py-2 text-left font-semibold">Client</th>
-            <th className="py-2 text-left font-semibold">Type</th>
+            <th className="py-2 pr-6 text-left font-semibold">Date</th>
+            <th className="py-2 pr-6 text-left font-semibold">Contract</th>
+            <th className="py-2 pr-6 text-left font-semibold">Client</th>
+            <th className="py-2 pr-6 text-left font-semibold">Type</th>
             <th className="py-2 text-right font-semibold">Hours</th>
             <th className="py-2 text-right font-semibold">Amount</th>
           </tr>
@@ -191,10 +191,10 @@ function RowTable({ rows }: { rows: { date: string; contract: string; client: st
         <tbody>
           {rows.map((r) => (
             <tr key={r.contract + r.date} className="border-b border-border/60 last:border-0">
-              <td className="py-3 text-muted-foreground">{r.date}</td>
-              <td className="py-3 font-medium">{r.contract}</td>
-              <td className="py-3 text-muted-foreground">{r.client}</td>
-              <td className="py-3">
+              <td className="py-3 pr-6 whitespace-nowrap text-muted-foreground">{r.date}</td>
+              <td className="py-3 pr-6 font-medium">{r.contract}</td>
+              <td className="py-3 pr-6 whitespace-nowrap text-muted-foreground">{r.client}</td>
+              <td className="py-3 pr-6">
                 <span className="rounded-full bg-muted px-2.5 py-1 text-[11px] font-medium">{r.type}</span>
               </td>
               <td className="py-3 text-right">{r.hours || "—"}</td>
