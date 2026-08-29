@@ -1,6 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowDownToLine, Wallet } from "lucide-react";
+import { ArrowDownToLine, Settings, Wallet, AlertCircle, CheckCircle2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   bucketRows,
   earningBuckets,
@@ -32,14 +40,41 @@ export const Route = createFileRoute("/freelancer/earnings/")({
   component: EarningsOverview,
 });
 
+const availableBalance = 3240;
+const withdrawalFee = 1.99;
+
+const paymentMethods = [
+  { id: "bank", label: "Bank transfer ••••4417", hasAccount: true },
+  { id: "paypal", label: "PayPal — amelia@studio.co", hasAccount: true },
+  { id: "wise", label: "Wise — EUR balance", hasAccount: true },
+];
+
 function EarningsOverview() {
   const [active, setActive] = useState<EarningBucket["id"]>("available");
-  const [amount, setAmount] = useState("3240.00");
-  const [method, setMethod] = useState("Bank transfer ••••4417");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [amountMode, setAmountMode] = useState<"full" | "other">("full");
+  const [otherAmount, setOtherAmount] = useState("");
+  const [methodId, setMethodId] = useState("bank");
   const [requested, setRequested] = useState(false);
 
   const bucket = earningBuckets.find((b) => b.id === active)!;
   const rows = bucketRows[active];
+
+  const selectedMethod = paymentMethods.find((m) => m.id === methodId)!;
+  const numericAmount = amountMode === "full" ? availableBalance : Math.max(Number(otherAmount || 0), 0);
+  const total = Math.max(numericAmount - withdrawalFee, 0);
+
+  const handleGetPaid = (e: React.FormEvent) => {
+    e.preventDefault();
+    setRequested(true);
+  };
+
+  const resetModal = () => {
+    setModalOpen(false);
+    setAmountMode("full");
+    setOtherAmount("");
+    setRequested(false);
+  };
 
   return (
     <div className="pb-4">
@@ -73,74 +108,172 @@ function EarningsOverview() {
           </div>
 
           {active === "available" ? (
-            <div className="mx-auto mt-5 max-w-md">
-              <div className="rounded-xl border border-border bg-muted/40 p-5">
-                <h4 className="text-sm font-semibold">Get paid now</h4>
-                {requested ? (
-                  <div className="mt-3 text-sm">
-                    <p className="font-medium text-primary">Withdrawal requested</p>
-                    <p className="mt-1 text-muted-foreground">
-                      ${amount} is on its way to {method}.
-                    </p>
-                    <button
-                      onClick={() => setRequested(false)}
-                      className="mt-4 rounded-lg border border-border bg-surface px-3 py-2 text-xs font-medium"
-                    >
-                      Make another withdrawal
-                    </button>
+            <div className="mt-5">
+              <div className="flex flex-col gap-4 rounded-xl border border-border bg-muted/30 p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-4">
+                  <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <Wallet className="size-5" />
                   </div>
-                ) : (
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setRequested(true);
-                    }}
-                    className="mt-3 flex flex-col gap-3"
-                  >
-                    <label className="flex flex-col gap-1.5 text-xs font-medium">
-                      Amount (USD)
-                      <input
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        inputMode="decimal"
-                        className="h-11 rounded-lg border border-border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring/40"
-                      />
-                    </label>
-                    <label className="flex flex-col gap-1.5 text-xs font-medium">
-                      Withdraw to
-                      <select
-                        value={method}
-                        onChange={(e) => setMethod(e.target.value)}
-                        className="h-11 rounded-lg border border-border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring/40"
-                      >
-                        <option>Bank transfer ••••4417</option>
-                        <option>PayPal — amelia@studio.co</option>
-                        <option>Wise — EUR balance</option>
-                      </select>
-                    </label>
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>You'll receive (after $1.99 fee)</span>
-                      <span className="font-semibold text-foreground">
-                        {money(Math.max(Number(amount || 0) - 1.99, 0))}
-                      </span>
-                    </div>
-                    <button
-                      type="submit"
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-                    >
-                      <ArrowDownToLine className="size-4" />
-                      Get paid now
-                    </button>
-                    <p className="flex items-center gap-2 text-[11px] text-muted-foreground">
-                      <Wallet className="size-3.5" />
-                      Payouts run every business day at 6pm UTC.
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Available balance</p>
+                    <p className="font-display text-2xl font-bold tracking-tight">{money(availableBalance)}</p>
+                    <p className="mt-1 max-w-md text-xs text-muted-foreground">
+                      Ready to withdraw. Payouts run every business day at 6pm UTC and usually
+                      arrive within 3 to 5 working days.
                     </p>
-                  </form>
-                )}
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-stretch md:flex-row md:items-center">
+                  <button
+                    onClick={() => setModalOpen(true)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                  >
+                    <ArrowDownToLine className="size-4" />
+                    Get paid
+                  </button>
+                  <Link
+                    to="/freelancer/settings"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+                  >
+                    <Settings className="size-4" />
+                    Payment settings
+                  </Link>
+                </div>
               </div>
-              <p className="mt-4 text-center text-xs text-muted-foreground">
-                Payment requests are processed and may take 3 to 5 working days.
-              </p>
+
+              <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+                <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
+                  <DialogHeader className="px-6 pt-6 pb-2 text-left">
+                    <DialogTitle className="text-xl font-semibold">Get paid now</DialogTitle>
+                    <DialogDescription className="text-sm text-muted-foreground">
+                      Withdraw your available balance to your preferred account.
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  {requested ? (
+                    <div className="px-6 pb-6 pt-2">
+                      <div className="rounded-xl border border-primary/20 bg-primary/10 p-5 text-center">
+                        <CheckCircle2 className="mx-auto size-10 text-primary" />
+                        <p className="mt-3 font-semibold text-foreground">Withdrawal requested</p>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {money(numericAmount)} is on its way to {selectedMethod.label}.
+                        </p>
+                        <p className="mt-4 text-xs text-muted-foreground">
+                          You should receive it within 3 to 5 working days.
+                        </p>
+                        <button
+                          onClick={resetModal}
+                          className="mt-5 inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                        >
+                          Done
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleGetPaid} className="px-6 pb-6 pt-2">
+                      <div className="space-y-5">
+                        <div className="rounded-xl border border-border bg-muted/30 p-4">
+                          <p className="text-xs font-medium text-muted-foreground">Available balance</p>
+                          <p className="font-display text-2xl font-bold">{money(availableBalance)}</p>
+                        </div>
+
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold">Payment method</p>
+                          {selectedMethod.hasAccount ? (
+                            <select
+                              value={methodId}
+                              onChange={(e) => setMethodId(e.target.value)}
+                              className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring/40"
+                            >
+                              {paymentMethods.map((m) => (
+                                <option key={m.id} value={m.id}>
+                                  {m.label}
+                                </option>
+                              ))}
+                            </select>
+                          ) : (
+                            <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+                              <div className="flex items-start gap-2">
+                                <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                                <div>
+                                  <p className="font-medium">No bank account available for withdrawal</p>
+                                  <p className="mt-0.5 text-xs opacity-90">
+                                    Please add a bank account in your payment settings.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="space-y-3">
+                          <p className="text-sm font-semibold">Amount</p>
+                          <RadioGroup
+                            value={amountMode}
+                            onValueChange={(v) => setAmountMode(v as "full" | "other")}
+                            className="gap-3"
+                          >
+                            <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-border bg-muted/20 p-3 transition-colors hover:bg-muted/40 has-[[data-state=checked]]:border-primary/50 has-[[data-state=checked]]:bg-primary/5">
+                              <RadioGroupItem value="full" id="amount-full" />
+                              <span className="text-sm font-medium">{money(availableBalance)}</span>
+                              <span className="ml-auto text-xs text-muted-foreground">Full balance</span>
+                            </label>
+                            <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-border bg-muted/20 p-3 transition-colors hover:bg-muted/40 has-[[data-state=checked]]:border-primary/50 has-[[data-state=checked]]:bg-primary/5">
+                              <RadioGroupItem value="other" id="amount-other" />
+                              <span className="text-sm font-medium">Other amount</span>
+                              {amountMode === "other" && (
+                                <span className="ml-auto flex items-center gap-1">
+                                  <span className="text-sm text-muted-foreground">$</span>
+                                  <input
+                                    autoFocus
+                                    value={otherAmount}
+                                    onChange={(e) => setOtherAmount(e.target.value)}
+                                    inputMode="decimal"
+                                    placeholder="0.00"
+                                    className="h-8 w-28 rounded-md border border-border bg-background px-2 text-right text-sm outline-none focus:ring-2 focus:ring-ring/40"
+                                  />
+                                </span>
+                              )}
+                            </label>
+                          </RadioGroup>
+                        </div>
+
+                        <div className="space-y-2 rounded-xl border border-border bg-muted/30 p-4 text-sm">
+                          <div className="flex justify-between text-muted-foreground">
+                            <span>Withdrawal fee</span>
+                            <span>{money(withdrawalFee)}</span>
+                          </div>
+                          <div className="flex justify-between text-xs text-muted-foreground/80">
+                            <span>Other bank fees may apply</span>
+                            <span>—</span>
+                          </div>
+                          <div className="mt-2 border-t border-border pt-3 flex justify-between font-semibold text-foreground">
+                            <span>Total amount</span>
+                            <span>{money(total)}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                          <button
+                            type="button"
+                            onClick={() => setModalOpen(false)}
+                            className="inline-flex items-center justify-center rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="submit"
+                            disabled={!selectedMethod.hasAccount || numericAmount <= 0}
+                            className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+                          >
+                            Get paid
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  )}
+                </DialogContent>
+              </Dialog>
             </div>
           ) : rows.length ? (
             <div className="mt-5">
