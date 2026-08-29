@@ -42,6 +42,7 @@ import { Route as JobJobIdShortlistRouteImport } from './routes/job.$jobId.short
 import { Route as JobJobIdEditRouteImport } from './routes/job.$jobId.edit'
 import { Route as JobJobIdApplicantsRouteImport } from './routes/job.$jobId.applicants'
 import { Route as FreelancerEarningsTransactionsRouteImport } from './routes/freelancer.earnings.transactions'
+import { Route as FreelancerEarningsReportsRouteImport } from './routes/freelancer.earnings.reports'
 import { Route as FreelancerFindWorkJobIdIndexRouteImport } from './routes/freelancer.find-work.$jobId.index'
 import { Route as StatsSpendingPaymentPaymentIdRouteImport } from './routes/stats.spending.payment.$paymentId'
 import { Route as StatsSpendingContractContractIdRouteImport } from './routes/stats.spending.contract.$contractId'
@@ -214,6 +215,12 @@ const FreelancerEarningsTransactionsRoute =
     path: '/transactions',
     getParentRoute: () => FreelancerEarningsRoute,
   } as any)
+const FreelancerEarningsReportsRoute =
+  FreelancerEarningsReportsRouteImport.update({
+    id: '/reports',
+    path: '/reports',
+    getParentRoute: () => FreelancerEarningsRoute,
+  } as any)
 const FreelancerFindWorkJobIdIndexRoute =
   FreelancerFindWorkJobIdIndexRouteImport.update({
     id: '/freelancer/find-work/$jobId/',
@@ -272,6 +279,7 @@ export interface FileRoutesByFullPath {
   '/agency/': typeof AgencyIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/stats/': typeof StatsIndexRoute
+  '/freelancer/earnings/reports': typeof FreelancerEarningsReportsRoute
   '/freelancer/earnings/transactions': typeof FreelancerEarningsTransactionsRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
@@ -310,6 +318,7 @@ export interface FileRoutesByTo {
   '/agency': typeof AgencyIndexRoute
   '/freelancer': typeof FreelancerIndexRoute
   '/stats': typeof StatsIndexRoute
+  '/freelancer/earnings/reports': typeof FreelancerEarningsReportsRoute
   '/freelancer/earnings/transactions': typeof FreelancerEarningsTransactionsRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
@@ -351,6 +360,7 @@ export interface FileRoutesById {
   '/agency/': typeof AgencyIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
   '/stats/': typeof StatsIndexRoute
+  '/freelancer/earnings/reports': typeof FreelancerEarningsReportsRoute
   '/freelancer/earnings/transactions': typeof FreelancerEarningsTransactionsRoute
   '/job/$jobId/applicants': typeof JobJobIdApplicantsRouteWithChildren
   '/job/$jobId/edit': typeof JobJobIdEditRoute
@@ -393,6 +403,7 @@ export interface FileRouteTypes {
     | '/agency/'
     | '/freelancer/'
     | '/stats/'
+    | '/freelancer/earnings/reports'
     | '/freelancer/earnings/transactions'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
@@ -431,6 +442,7 @@ export interface FileRouteTypes {
     | '/agency'
     | '/freelancer'
     | '/stats'
+    | '/freelancer/earnings/reports'
     | '/freelancer/earnings/transactions'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
@@ -471,6 +483,7 @@ export interface FileRouteTypes {
     | '/agency/'
     | '/freelancer/'
     | '/stats/'
+    | '/freelancer/earnings/reports'
     | '/freelancer/earnings/transactions'
     | '/job/$jobId/applicants'
     | '/job/$jobId/edit'
@@ -752,6 +765,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerEarningsTransactionsRouteImport
       parentRoute: typeof FreelancerEarningsRoute
     }
+    '/freelancer/earnings/reports': {
+      id: '/freelancer/earnings/reports'
+      path: '/reports'
+      fullPath: '/freelancer/earnings/reports'
+      preLoaderRoute: typeof FreelancerEarningsReportsRouteImport
+      parentRoute: typeof FreelancerEarningsRoute
+    }
     '/freelancer/find-work/$jobId/': {
       id: '/freelancer/find-work/$jobId/'
       path: '/freelancer/find-work/$jobId'
@@ -807,11 +827,13 @@ const StatsRouteChildren: StatsRouteChildren = {
 const StatsRouteWithChildren = StatsRoute._addFileChildren(StatsRouteChildren)
 
 interface FreelancerEarningsRouteChildren {
+  FreelancerEarningsReportsRoute: typeof FreelancerEarningsReportsRoute
   FreelancerEarningsTransactionsRoute: typeof FreelancerEarningsTransactionsRoute
   FreelancerEarningsIndexRoute: typeof FreelancerEarningsIndexRoute
 }
 
 const FreelancerEarningsRouteChildren: FreelancerEarningsRouteChildren = {
+  FreelancerEarningsReportsRoute: FreelancerEarningsReportsRoute,
   FreelancerEarningsTransactionsRoute: FreelancerEarningsTransactionsRoute,
   FreelancerEarningsIndexRoute: FreelancerEarningsIndexRoute,
 }
