@@ -3,7 +3,7 @@ import { Download } from "lucide-react";
 import { FreelancerShell } from "@/components/freelancer-shell";
 
 export const Route = createFileRoute("/freelancer/earnings")({
-  component: EarningsLayout;
+  component: EarningsLayout,
 });
 
 const tabs = [
