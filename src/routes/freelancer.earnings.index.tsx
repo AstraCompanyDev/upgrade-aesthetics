@@ -73,13 +73,7 @@ function EarningsOverview() {
           </div>
 
           {active === "available" ? (
-            <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
-              <div>
-                {rows.length ? <RowTable rows={rows} /> : null}
-                <p className="mt-4 text-xs text-muted-foreground">
-                  Payment requests are processed and may take 3 to 5 working days.
-                </p>
-              </div>
+            <div className="mx-auto mt-5 max-w-md">
               <div className="rounded-xl border border-border bg-muted/40 p-5">
                 <h4 className="text-sm font-semibold">Get paid now</h4>
                 {requested ? (
@@ -144,6 +138,9 @@ function EarningsOverview() {
                   </form>
                 )}
               </div>
+              <p className="mt-4 text-center text-xs text-muted-foreground">
+                Payment requests are processed and may take 3 to 5 working days.
+              </p>
             </div>
           ) : rows.length ? (
             <div className="mt-5">
